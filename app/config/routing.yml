@@ -1,0 +1,4 @@
+tipr_application:
+    resource: "@TiprApplicationBundle/Resources/config/routing.yml"
+    prefix:   /
+
