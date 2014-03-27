@@ -13,7 +13,7 @@ app/config/parameters.ini
 app/config/parameters.yml
 
 # Phpstorm
-./.idea
+.idea/*
 
 # Composer
 composer.lock
