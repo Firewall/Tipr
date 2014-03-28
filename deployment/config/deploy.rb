@@ -96,7 +96,7 @@ namespace :deploy do
 
             run <<-CMD
               rm -rf #{latest_release}/app/logs &&
-              ln -s #{shared_path}/logs #{latest_release}/app/logs
+              mkdir -p #{latest_release}/app/logs
             CMD
 
 
