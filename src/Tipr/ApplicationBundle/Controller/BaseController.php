@@ -40,7 +40,7 @@ class BaseController extends Controller
         return true;
     }
 
-    public function make_transfer()
+    public function make_transfer($product)
     {
         $url = $this->api_base_url . '/openapi/rest/transfers/' . '6ea7e24c-2993-34af-bc87-89bec6edfc36' . $this->api_key;
         $client = new Client();

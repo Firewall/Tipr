@@ -5,6 +5,7 @@ namespace Tipr\ApplicationBundle\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Tipr\ApplicationBundle\Form\Type\DonateType;
 use Symfony\Component\HttpFoundation\Request;
+use Tipr\ApplicationBundle\Entity\Donation;
 
 class DonatorController extends BaseController
 {
@@ -116,21 +117,25 @@ class DonatorController extends BaseController
 
                 $pProduct = null;
                 foreach($products as $product){
-                    if($product['iban'] = $product){
+                    if($product['iban'] = $iban){
                         $pProduct = $product['iban'];
                         break;
                     }
                 }
 
-                //var_dump($products);
+                $donation = new Donation();
+                $donation->setAmount($data['amount']);
+                $donation->setRecipient($recipient);
+                $donation->setDonator($donator);
 
-                //var_dump($this->api_get('/openapi/rest/prepare-movemoney',$cookie));
-                //$pProduct
-
-
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($donation);
+                $em->flush();
 
                 // make transfer
-                $this->make_transfer();
+                $this->make_transfer($pProduct);
+
+                //todo: redirect
             }
         }
 
