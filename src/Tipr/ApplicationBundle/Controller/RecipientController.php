@@ -13,7 +13,13 @@ class RecipientController extends BaseController
             ->getRepository('TiprApplicationBundle:Recipient')
             ->find($id);
 
-        // todo: get donations of donator
+        $donations = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Donator')
+            ->getDonationsLimit($recipient->getId(), 13);
+
+        $donationsThisWeek = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Donator')
+            ->getDonationsThisWeek($recipient->getId());
         $donations = $recipient->getDonations();
 
         return $this->render('TiprApplicationBundle:Donator:index.html.twig',array(

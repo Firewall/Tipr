@@ -3,39 +3,46 @@
 {% set title = 'Overview' %}
 
 {% block pageContent %}
-<div role="main" class="ui-content jqm-content jqm-fullwidth">
-    <div class="ui-grid-b ui-corner-all">
-        <div class="ui-block-a">
-            <div class="ui-bar ui-bar-a">Today<br/></div>
-            <div class="ui-body ui-body-a">&#8364;3,00</div>
+    <div role="main" class="ui-content jqm-content jqm-fullwidth">
+        <div class="ui-grid-b ui-corner-all">
+            <div class="ui-block-a">
+                <div class="ui-bar ui-bar-a">Today<br/></div>
+                <div class="ui-body ui-body-a">&#8364; {{ totalToday | number_format(2, ',') }}</div>
+            </div>
+            <div class="ui-block-b">
+                <div class="ui-bar ui-bar-a">Week<br/></div>
+                <div class="ui-body ui-body-a">&#8364; {{ totalWeek | number_format(2, ',') }}</div>
+            </div>
+            <div class="ui-block-c">
+                <div class="ui-bar ui-bar-a">Month</div>
+                <div class="ui-body ui-body-a">&#8364; {{ totalMonth | number_format(2, ',') }}</div>
+            </div>
         </div>
-        <div class="ui-block-b">
-            <div class="ui-bar ui-bar-a">This week<br/></div>
-            <div class="ui-body ui-body-a">&#8364;3,00</div>
-        </div>
-        <div class="ui-block-c">
-            <div class="ui-bar ui-bar-a">This month</div>
-            <div class="ui-body ui-body-a">&#8364;3,00</div>
-        </div>
-    </div>
 
-    <div data-theme="a" data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all separate">
-        <div id="chart" style="width: 100%; height: 200px;"></div>
-    </div>
+        <div data-theme="a" data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all tipr-separate tipr-header">
+            <div id="chart-donator"></div>
+        </div>
 
-    <ul data-role="listview" data-count-theme="b" data-inset="true">
-        <li>John Doe <span class="ui-li-count">&#8364;1,00</span></li>
-        <li>John Doe <span class="ui-li-count">&#8364;1,00</span></li>
-        <li>John Doe <span class="ui-li-count">&#8364;1,00</span></li>
-    </ul>
-</div>
+        <ul id="chart-data">
+            {% for donation in donationsThisWeek %}
+                <li data-amount="{{ donation.amount }}"></li>
+            {% endfor %}
+        </ul>
+
+        <h2>Latest donations</h2>
+        <ul data-role="listview" data-count-theme="b" data-inset="true">
+            {% for donation in donations %}
+                <li>{{ donation.message }} <span class="ui-li-count">&#8364; {{ donation.amount | number_format(2, ',') }}</span></li>
+            {% endfor %}
+        </ul>
+    </div><!-- /content -->
 
 
     {{ donator.name }}
 
     <ul>
         {% for donation in donations %}
-            <li>{{ donation.message }}{{ donation.amount }}{{ donation.date|date }}</li>
+            <li>{{ donation.message }}{{ donation.recipient }}{{ donation.amount }}{{ donation.date|date }}</li>
         {% endfor %}
     </ul>
 
@@ -44,8 +51,8 @@
     {{ totalMonth }}
 
     <ul>
-        {% for donation in donationsThisWeek %}
-            <li>{{ donation.amount }} {{ donation.date|date }} {{ donation.message }} {{ donation.amount }} {{ donation.date|date }}</li>
+        {% for day,amount in donationsThisWeek %}
+            <li>{{ day }} this {{ amount }}</li>
         {% endfor %}
     </ul>
 {% endblock %}
