@@ -1,2 +1,17 @@
-{{ donator }}
-{{ donations }}
+{{ donator.name }}
+
+<ul>
+{% for donation in donations %}
+    <li>{{ donation.message }}{{ donation.amount }}{{ donation.date|date }}</li>
+{% endfor %}
+</ul>
+
+{{ totalToday }}
+{{ totalWeek }}
+{{ totalMonth }}
+
+<ul>
+{% for donation in donationsThisWeek %}
+    <li>{{ donation.amount }} {{ donation.date|date }} {{ donation.message }} {{ donation.amount }} {{ donation.date|date }}</li>
+{% endfor %}
+</ul>

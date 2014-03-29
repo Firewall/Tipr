@@ -12,8 +12,33 @@ use Doctrine\ORM\EntityRepository;
  */
 class DonatorRepository extends EntityRepository
 {
-    public function getDonations($donatorID){
+    public function getDonationsLimit($donator, $limit)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        return $qb->select('c')
+            ->from('Tipr\ApplicationBundle\Entity\Donation', 'c')
+            ->where('c.donator = :donator')
+            ->setParameter('donator', $donator)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
 
+    public function getDonationsThisWeek($donator)
+    {
+        $start = strtotime("-1 week");
+        $end = strtotime("tomorrow");
+
+        $qb = $this->_em->createQueryBuilder();
+        return $qb->select('c')
+            ->from('Tipr\ApplicationBundle\Entity\Donation', 'c')
+            ->where('(c.date BETWEEN :start AND :end) AND c.donator = :donator')
+            ->setParameter('donator', $donator)
+            ->setParameter('start', date('Y-m-d', $start))
+            ->setParameter('end', date('Y-m-d', $end))
+            ->orderBy('c.date', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 
 }
