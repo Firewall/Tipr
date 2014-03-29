@@ -30,4 +30,24 @@ class BaseController extends Controller
         return true;
     }
 
+    public function logIn($documentNumber,$birthday){
+        $url = $this->api_base_url . "/openlogin/rest/ticket" . $this->api_key;
+
+        $json['loginDocument'] = ['documentType' => 0, 'document' => $documentNumber];
+        $json['birthday'] = $birthday;
+
+        $response = Api::post($url, json_encode($json), 'application/json')->send();
+
+        $ticket = $response->body->ticket;
+
+        $client = new Client();
+
+        $response = $client->post($this->api_base_url . '/openapi/login/auth/response' . $this->api_key, [
+                'headers' => ['Content-Type' => 'application/x-www-form-urlencoded'],
+                'body' => ['ticket' => $ticket]
+            ]);
+
+        // get cookie
+        return $response->getHeader('set-cookie');
+    }
 }

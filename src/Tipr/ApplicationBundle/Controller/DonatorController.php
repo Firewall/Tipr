@@ -2,8 +2,10 @@
 
 namespace Tipr\ApplicationBundle\Controller;
 
-class DonatorController extends BaseController{
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+class DonatorController extends BaseController
+{
     public function indexAction()
     {
         // todo: find donator id in sessions
@@ -16,9 +18,29 @@ class DonatorController extends BaseController{
         // todo: get donations of donator
         $donations = $donator->getDonations();
 
-        return $this->render('TiprApplicationBundle:Donator:index.html.twig',array(
+        return $this->render('TiprApplicationBundle:Donator:index.html.twig', array(
             'donator' => $donator,
             'donations' => $donations
         ));
+    }
+
+    public function donateAction($displayname)
+    {
+        $donator = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Donator')
+            ->findOneBy(array('displayname' => $displayname));
+
+        if(!$donator){
+            throw new NotFoundHttpException();
+        }
+
+        return $this->render('TiprApplicationBundle:Donator:donate.html.twig', array(
+            'donator' => $donator,
+        ));
+    }
+
+    public function donateProcessAction()
+    {
+
     }
 } 

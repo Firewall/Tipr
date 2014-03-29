@@ -1,76 +1,143 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: antho_000
- * Date: 29/03/14
- * Time: 12:52
- */
 
 namespace Tipr\ApplicationBundle\Controller;
-
 
 use GuzzleHttp\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Tipr\ApplicationBundle\Form\Type\LogInType;
+use Tipr\ApplicationBundle\Form\Type\RegisterType;
 use Httpful\Request as Api;
+use Tipr\ApplicationBundle\Entity\Donator;
+use Tipr\ApplicationBundle\Entity\Recipient;
 
 class AuthenticationController extends BaseController
 {
-    public function logInAction()
+    public function registerDonatorAction()
     {
-        $form = $this->createForm(new LogInType());
+        $form = $this->createForm(new RegisterType());
 
-        return $this->render('TiprApplicationBundle:Authentication:login.html.twig', array(
+        return $this->render('TiprApplicationBundle:Authentication:registerDonator.html.twig', array(
             'form' => $form->createView()
         ));
     }
 
-    public function logInProcessAction(Request $request)
+    public function registerRecipientAction()
+    {
+        $form = $this->createForm(new RegisterType());
+
+        return $this->render('TiprApplicationBundle:Authentication:registerRecipient.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    public function registerDonatorProcessAction(Request $request)
     {
         $error = false;
 
-        $form = $this->createForm(new LogInType());
+        $form = $this->createForm(new RegisterType());
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $data = $form->getData();
 
-            $url = $this->api_base_url . "/openlogin/rest/ticket" . $this->api_key;
-
-            $json['loginDocument'] = ['documentType' => 0, 'document' => $data['documentNumber']];
-            $json['birthday'] = $data['birthDate'];
-
-            $response = Api::post($url, json_encode($json), 'application/json')->send();
-
-            $ticket = $response->body->ticket;
-
-            $client = new Client();
-
-            $response = $client->post($this->api_base_url . '/openapi/login/auth/response' . $this->api_key, [
-                    'headers' => ['Content-Type' => 'application/x-www-form-urlencoded'],
-                    'body' => ['ticket' => $ticket]
-                ]);
-
-            // get cookie
-            $cookie = $response->getHeader('set-cookie');
-
+            $cookie = $this->logIn($data['documentNumber'],$data['birthDate']);
             $client = $this->api_get('/openapi/rest/client', $cookie);
 
             if ($cookie && isset($client['personId'])) {
-                $request->getSession()->set('cookie', $cookie);
-                $request->getSession()->set('personId', $client['personId']);
+                $em = $this->getDoctrine()->getManager();
+
+                $donator = $this->getDoctrine()
+                    ->getRepository('TiprApplicationBundle:Donator')
+                    ->findOneBy(array('api_id' => $client['personId']));
+
+                if($donator == null){
+                    $donator = new Donator();
+                    $donator->setName($client['name']);
+                    $donator->setSurname($client['firstSurname']);
+                    $donator->setApiId($client['personId']);
+                    $donator->setDocumentNumber($data['documentNumber']);
+                    $donator->setBirthday($data['birthDate']);
+                    $donator->setCode($data['code']);
+                    $em->persist($donator);
+
+                    $em->flush();
+
+                    // log in
+                    $request->getSession()->set('personId', $client['personId']);
+                    $request->getSession()->set('cookie', $cookie);
+
+                    return $this->redirect($this->generateUrl('tipr_application_m_donator_overview'));
+                }
+                else{
+                    $error = 'Already registered';
+                }
             } else {
                 $error = 'Incorrect document number or birthday';
             }
         }
 
-        return $this->render('TiprApplicationBundle:Authentication:login.html.twig', array(
+        return $this->render('TiprApplicationBundle:Authentication:registerDonator.html.twig', array(
             'form' => $form->createView(),
             'error' => $error
         ));
     }
+
+    public function registerRecipientProcessAction(Request $request)
+    {
+        $error = false;
+
+        $form = $this->createForm(new RegisterType());
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $data = $form->getData();
+
+            $cookie = $this->logIn($data['documentNumber'],$data['birthDate']);
+            $client = $this->api_get('/openapi/rest/client', $cookie);
+
+            if ($cookie && isset($client['personId'])) {
+                $em = $this->getDoctrine()->getManager();
+
+                $recipient = $this->getDoctrine()
+                    ->getRepository('TiprApplicationBundle:Recipient')
+                    ->findOneBy(array('api_id' => $client['personId']));
+
+                if($recipient == null){
+
+                    $recipient = new Recipient();
+                    $recipient->setName($client['name']);
+                    $recipient->setSurname($client['firstSurname']);
+                    $recipient->setApiId($client['personId']);
+                    $recipient->setDocumentNumber($data['documentNumber']);
+                    $recipient->setBirthday($data['birthDate']);
+                    $recipient->setCode($data['code']);
+                    $em->persist($recipient);
+
+                    $em->flush();
+
+                    // log in
+                    $request->getSession()->set('personId', $client['personId']);
+                    $request->getSession()->set('cookie', $cookie);
+
+                    return $this->redirect($this->generateUrl('tipr_application_recipient_overview'));
+                }
+                else{
+                    $error = 'Already registered';
+                }
+            } else {
+                $error = 'Incorrect document number or birthday';
+            }
+        }
+
+        return $this->render('TiprApplicationBundle:Authentication:registerRecipient.html.twig', array(
+            'form' => $form->createView(),
+            'error' => $error
+        ));
+    }
+
 
     public function logout(Request $request)
     {

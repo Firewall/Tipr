@@ -24,14 +24,14 @@ class Donator
     /**
      * @var string
      *
-     * @ORM\Column(name="emailaddress", type="string", length=255)
+     * @ORM\Column(name="emailaddress", type="string", length=255,nullable=true)
      */
     private $emailaddress;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="picture", type="string", length=255)
+     * @ORM\Column(name="picture", type="string", length=255,nullable=true)
      */
     private $picture;
 
@@ -48,6 +48,20 @@ class Donator
      * @ORM\Column(name="surname", type="string", length=255)
      */
     private $surname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="documentnumber", type="string", length=255)
+     */
+    private $documentNumber;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="birthday", type="string", length=255)
+     */
+    private $birthday;
 
     /**
      * @ORM\ManyToMany(targetEntity="Tipr\ApplicationBundle\Entity\Donation")
@@ -193,5 +207,60 @@ class Donator
     public function getDonnations()
     {
         return $this->donnations;
+    }
+
+    /**
+     * @param string $birthday
+     */
+    public function setBirthday($birthday)
+    {
+        $this->birthday = $birthday;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBirthday()
+    {
+        return $this->birthday;
+    }
+
+    /**
+     * @param string $documentNumber
+     */
+    public function setDocumentNumber($documentNumber)
+    {
+        $this->documentNumber = $documentNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDocumentNumber()
+    {
+        return $this->documentNumber;
+    }
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="code", type="string", length=255,nullable=true)
+     */
+    private $code;
+
+    /**
+     * @param string $code
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
     }
 }
