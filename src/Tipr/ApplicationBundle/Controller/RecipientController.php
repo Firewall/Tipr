@@ -2,16 +2,16 @@
 
 namespace Tipr\ApplicationBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
+
 class RecipientController extends BaseController
 {
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        // todo: get reciever
-        $id = 1;
-
+        // get recipient
         $recipient = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Recipient')
-            ->find($id);
+            ->findOneBy(array('apiId' => $request->getSession()->get('personId')));
 
         $recentDonations = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Recipient')
@@ -41,5 +41,24 @@ class RecipientController extends BaseController
             'donationsThisWeek' => $donationsThisWeek,
             'donationsThisMonth' => $donationsThisMonth
         ));
+    }
+
+    public function settingsAction()
+    {
+
+
+        return $this->render('TiprApplicationBundle:Recipient:index.html.twig', array(
+            'recipient' => $recipient,
+            'recentDonations' => $recentDonations,
+            'highestDonations' => $highestDonations,
+            'donationsThisDay' => $donationsThisDay,
+            'donationsThisWeek' => $donationsThisWeek,
+            'donationsThisMonth' => $donationsThisMonth
+        ));
+    }
+
+    public function settingsProcessAction()
+    {
+
     }
 } 
