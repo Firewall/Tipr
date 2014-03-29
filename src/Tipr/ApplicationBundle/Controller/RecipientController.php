@@ -2,16 +2,16 @@
 
 namespace Tipr\ApplicationBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
+
 class RecipientController extends BaseController
 {
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        // todo: get reciever
-        $id = 1;
-
+        // get recipient
         $recipient = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Recipient')
-            ->find($id);
+            ->findOneBy(array('api_key' => $request->getSession()->get('personId')));
 
         $donationsWeek = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Recipient')
@@ -45,6 +45,28 @@ class RecipientController extends BaseController
             'totalToday' => $donationsThisDay,
             'totalWeek' => $donationsThisWeek,
             'totalMonth' => $donationsThisMonth
+        ));
+    }
+
+    public function settingsAction(Request $request)
+    {
+        $recipient = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Recipient')
+            ->findOneBy(array('apiId' => $request->getSession()->get('personId')));
+
+        return $this->render('TiprApplicationBundle:Recipient:settings.html.twig', array(
+            'recipient' => $recipient,
+        ));
+    }
+
+    public function settingsProcessAction(Request $request)
+    {
+        $recipient = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Recipient')
+            ->findOneBy(array('apiId' => $request->getSession()->get('personId')));
+
+        return $this->render('TiprApplicationBundle:Recipient:settings.html.twig', array(
+            'recipient' => $recipient,
         ));
     }
 } 
