@@ -32,7 +32,7 @@ class RecipientRepository extends EntityRepository
             ->from('Tipr\ApplicationBundle\Entity\Donation', 'c')
             ->where('c.recipient = :recipient')
             ->setParameter('recipient', $recipient)
-            ->orderBy('c.amount')
+            ->orderBy('c.amount', 'DESC')
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
