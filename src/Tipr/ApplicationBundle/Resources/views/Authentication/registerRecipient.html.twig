@@ -1,40 +1,48 @@
-{#post documentNumber and birthDate to tipr_application_loginProcess#}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tipr - register</title>
 
-<form class="form-horizontal" role="form" action="{{ path('tipr_application_registerRecipientProcess') }}" {{ form_enctype(form) }} method="post"
-      novalidate="novalidate">
-    <div class="form-group">
-        {{ form_label(form.username,null,{'label_attr': {'class': 'col-sm-2' }}) }}
-        <div class="col-sm-9">
-            {{ form_widget(form.username, {'attr': {'class': 'form-control' }}) }}
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.4.2/base-min.css">
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.4.2/buttons-min.css">
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.4.2/forms-nr-min.css">
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.4.2/grids-nr-min.css">
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.4.2/menus-nr-min.css">
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.4.2/tables-min.css">
+
+    <link href='http://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/Tipr/web/css/main2.css">
+</head>
+<body class="pure-skin-tipr signup">
+<div class="wrapper">
+    <h1><a href="index.html">Tipr</a> sign up</h1>
+
+    <form class="pure-form" role="form" action="{{ path('tipr_application_registerRecipientProcess') }}" {{ form_enctype(form) }} method="post" novalidate="novalidate">
+        <fieldset class="pure-group">
+                {{ form_widget(form.birthDate, {'attr': {'class': 'pure-input' , 'placeholder' : 'Birth date' }}) }}
+                {{ form_errors(form.birthDate) }}
+                {{ form_widget(form.documentNumber, {'attr': {'class': 'pure-input' , 'placeholder' : 'Document number' }}) }}
+                {{ form_errors(form.documentNumber) }}
+        </fieldset>
+
+        <fieldset class="pure-group">
+            {{ form_widget(form.username, {'attr': {'class': 'pure-input' , 'placeholder' : 'Username' }}) }}
             {{ form_errors(form.username) }}
-        </div>
-    </div>
-
-    <div class="form-group">
-        {{ form_label(form.birthDate,null,{'label_attr': {'class': 'col-sm-2' }}) }}
-        <div class="col-sm-9">
-            {{ form_widget(form.birthDate, {'attr': {'class': 'form-control' }}) }}
-            {{ form_errors(form.birthDate) }}
-        </div>
-    </div>
-
-    <div class="form-group">
-        {{ form_label(form.documentNumber,null,{'label_attr': {'class': 'col-sm-2' }}) }}
-        <div class="col-sm-10">
-            {{ form_widget(form.documentNumber, {'attr': {'class': 'form-control' }}) }}
-            {{ form_errors(form.documentNumber) }}
-        </div>
-    </div>
-
-    <div class="form-group">
-        {{ form_label(form.code,null,{'label_attr': {'class': 'col-sm-2' }}) }}
-        <div class="col-sm-9">
-            {{ form_widget(form.code, {'attr': {'class': 'form-control' }}) }}
+            {{ form_widget(form.code, {'attr': {'class': 'pure-input' , 'placeholder' : 'PIN code' }}) }}
             {{ form_errors(form.code) }}
-        </div>
-    </div>
+        </fieldset>
 
-    {{ form_widget(form.send,{'attr' : {'class' : 'btn btn-primary' }}) }}
+        {{ error }}
 
-    {{ form_widget(form._token) }}
-</form>
+        {{ form_widget(form.send,{'attr' : {'class' : 'pure-button pure-input pure-button-primary' , 'label' : 'Register' }}) }}
+
+        {{ form_widget(form._token) }}
+    </form>
+</div>
+</body>
+</html>
