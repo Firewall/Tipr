@@ -7,24 +7,39 @@ class RecipientController extends BaseController
     public function indexAction()
     {
         // todo: get reciever
-        $id = 0;
+        $id = 1;
 
         $recipient = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Recipient')
             ->find($id);
 
-        $donations = $this->getDoctrine()
-            ->getRepository('TiprApplicationBundle:Donator')
-            ->getDonationsLimit($recipient->getId(), 13);
+        $recentDonations = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Recipient')
+            ->getRecentDonationsLimit($recipient->getId(), 13);
+
+        $highestDonations = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Recipient')
+            ->getHighestDontionsLimit($recipient->getId(), 6);
+
+        $donationsThisDay = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Recipient')
+            ->getDonationsThisWeek($recipient->getId());
 
         $donationsThisWeek = $this->getDoctrine()
-            ->getRepository('TiprApplicationBundle:Donator')
+            ->getRepository('TiprApplicationBundle:Recipient')
             ->getDonationsThisWeek($recipient->getId());
-        $donations = $recipient->getDonations();
 
-        return $this->render('TiprApplicationBundle:Donator:index.html.twig',array(
+        $donationsThisMonth = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Recipient')
+            ->getDonationsThisWeek($recipient->getId());
+
+        return $this->render('TiprApplicationBundle:Recipient:index.html.twig', array(
             'recipient' => $recipient,
-            'donations' => $donations
+            'recentDonations' => $recentDonations,
+            'highestDonations' => $highestDonations,
+            'donationsThisDay' => $donationsThisDay,
+            'donationsThisWeek' => $donationsThisWeek,
+            'donationsThisMonth' => $donationsThisMonth
         ));
     }
 } 
