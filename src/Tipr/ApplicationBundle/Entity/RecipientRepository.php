@@ -40,13 +40,19 @@ class RecipientRepository extends EntityRepository
 
     public function getDonationsThisWeekPerDay($recipient)
     {
-        $start = strtotime("-1 month");
+        $start = strtotime("-1 week");
         $end = strtotime("tomorrow");
+
+//        echo $recipient;
+        echo  date('Y-m-d', $start);
+        echo " ";
+        echo  date('Y-m-d', $end);
 
         $qb = $this->_em->createQueryBuilder();
         $donations = $qb->select('c')
             ->from('Tipr\ApplicationBundle\Entity\Donation', 'c')
-            ->where('(c.date BETWEEN :start AND :end) AND c.recipient = :recipient')
+            ->where('c.date BETWEEN :start AND :end')
+            ->andWhere('c.recipient = :recipient')
             ->setParameter('recipient', $recipient)
             ->setParameter('start', date('Y-m-d', $start))
             ->setParameter('end', date('Y-m-d', $end))
@@ -56,12 +62,15 @@ class RecipientRepository extends EntityRepository
 
         $totals = array();
         foreach ($donations as $donation) {
-            if (isset($totals[date_format($donation->getDate(), 'Y-m-d')])) {
-                $totals[date_format($donation->getDate(), 'Y-m-d')] += $donation->getAmount();
+            var_dump(date_format($donation->getDate(), 'Y/m/d'));
+            if (isset($totals[date_format($donation->getDate(), 'Y/m/d')])) {
+                $totals[date_format($donation->getDate(), 'Y/m/d')] += $donation->getAmount();
             } else {
-                $totals[date_format($donation->getDate(), 'Y-m-d')] = $donation->getAmount();
+                $totals[date_format($donation->getDate(), 'Y/m/d')] = $donation->getAmount();
             }
         }
+
+        var_dump($totals);
         return $totals;
     }
 
@@ -97,7 +106,8 @@ class RecipientRepository extends EntityRepository
         $qb = $this->_em->createQueryBuilder();
         $donations = $qb->select('c')
             ->from('Tipr\ApplicationBundle\Entity\Donation', 'c')
-            ->where('(c.date BETWEEN :start AND :end) AND c.recipient = :recipient')
+            ->where('c.date BETWEEN :start AND :end')
+            ->andWhere('c.recipient = :recipient')
             ->setParameter('recipient', $recipient)
             ->setParameter('start', date('Y-m-d', $start))
             ->setParameter('end', date('Y-m-d', $end))
