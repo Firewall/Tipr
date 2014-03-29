@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Overview</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="/Tipr/web/css/main.css"/>
+    <link rel="stylesheet" href="/css/main.css"/>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile.structure-1.4.2.min.css"/>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+
+</head>
+<body>
+
+<div data-role="page" class="jqm-demos" id="panel-fixed-page1" data-title="{{ title }}" data-url="panel-fixed-page1">
+    <div data-role="header" data-position="fixed">
+        <h1>{{ title }}</h1>
+    </div>
+    <!-- /header -->
+    {% block pageContent %}
+    {% endblock %}
+    <!-- /content -->
+    <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="a" id="nav-panel">
+        <ul data-role="listview">
+            <li data-icon="delete"><a href="#" data-rel="close">Close menu</a></li>
+        </ul>
+    </div>
+    <!-- /panel -->
+</div>
+
+<script src="https://www.google.com/jsapi"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
