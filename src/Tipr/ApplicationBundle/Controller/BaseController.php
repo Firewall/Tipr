@@ -22,4 +22,13 @@ class BaseController extends Controller
         return json_decode($response->getBody(), true);
     }
 
+    public function check_login($session){
+        if (!$session->get('cookie')) {
+            //redirect to login
+            return false;
+        }
+        return true;
+
+    }
+
 }
