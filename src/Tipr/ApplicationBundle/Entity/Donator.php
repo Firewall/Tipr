@@ -24,6 +24,13 @@ class Donator
     /**
      * @var string
      *
+     * @ORM\Column(name="username", type="string", length=255,nullable=true)
+     */
+    private $username;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="emailaddress", type="string", length=255,nullable=true)
      */
     private $emailaddress;
@@ -262,5 +269,21 @@ class Donator
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * @param string $username
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
     }
 }

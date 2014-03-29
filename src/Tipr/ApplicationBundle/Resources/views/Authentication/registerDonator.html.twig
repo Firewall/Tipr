@@ -4,6 +4,14 @@
       novalidate="novalidate">
 
     <div class="form-group">
+        {{ form_label(form.username,null,{'label_attr': {'class': 'col-sm-2' }}) }}
+        <div class="col-sm-9">
+            {{ form_widget(form.username, {'attr': {'class': 'form-control' }}) }}
+            {{ form_errors(form.username) }}
+        </div>
+    </div>
+
+    <div class="form-group">
         {{ form_label(form.birthDate,null,{'label_attr': {'class': 'col-sm-2' }}) }}
         <div class="col-sm-9">
             {{ form_widget(form.birthDate, {'attr': {'class': 'form-control' }}) }}

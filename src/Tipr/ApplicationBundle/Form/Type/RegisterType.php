@@ -12,6 +12,10 @@ class RegisterType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('username', 'text',array(
+            'constraints' => new \Symfony\Component\Validator\Constraints\NotBlank()
+        ));
+
         $builder->add('birthDate', 'text',array(
             'constraints' => new \Symfony\Component\Validator\Constraints\NotBlank()
         ));

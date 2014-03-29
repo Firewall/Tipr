@@ -13,6 +13,23 @@ use Tipr\ApplicationBundle\Entity\Recipient;
 
 class AuthenticationController extends BaseController
 {
+    public function loginDonatorAction(){
+
+    }
+
+    public function loginDonatorProcess(){
+
+    }
+
+    public function loginRecipientAction(){
+
+    }
+
+    public function loginRecipientProcess(){
+
+    }
+
+
     public function registerDonatorAction()
     {
         $form = $this->createForm(new RegisterType());
@@ -56,6 +73,7 @@ class AuthenticationController extends BaseController
                     $donator = new Donator();
                     $donator->setName($client['name']);
                     $donator->setSurname($client['firstSurname']);
+                    $donator->setUsername($data['username']);
                     $donator->setApiId($client['personId']);
                     $donator->setDocumentNumber($data['documentNumber']);
                     $donator->setBirthday($data['birthDate']);
@@ -110,6 +128,7 @@ class AuthenticationController extends BaseController
                     $recipient = new Recipient();
                     $recipient->setName($client['name']);
                     $recipient->setSurname($client['firstSurname']);
+                    $recipient->setUsername($data['username']);
                     $recipient->setApiId($client['personId']);
                     $recipient->setDocumentNumber($data['documentNumber']);
                     $recipient->setBirthday($data['birthDate']);
