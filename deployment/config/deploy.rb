@@ -96,7 +96,8 @@ namespace :deploy do
 
             run <<-CMD
               rm -rf #{latest_release}/app/logs &&
-              mkdir -p #{latest_release}/app/logs
+              mkdir -p #{latest_release}/app/logs &&
+              chmod 755 #{latest_release}/app/logs
             CMD
 
 

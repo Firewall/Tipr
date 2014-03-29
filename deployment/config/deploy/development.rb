@@ -1,13 +1,13 @@
 # DEVELOPMENT-specific deployment configuration
 # please put general deployment config in config/deploy.rb
 
-server "tipr.be", :app, :web, :db, :primary => true
+server "178.63.145.141", :app, :web, :db, :primary => true
 
-set :application, "tipr.be"
+set :application, "178.63.145.141"
 set :application_env, "dev"
 set :branch, "master"
 set :user, "root"
-set :deploy_to, "/home/wwwroot/default"
+set :deploy_to, "/var/www/"
 
 namespace :deploy do
     task :restart do
