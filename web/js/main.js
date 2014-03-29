@@ -2,16 +2,18 @@ google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(drawChart);
 
 function drawChart() {
-    var data = google.visualization.arrayToDataTable([
-        ['Day', 'Donated'],
-        ['Mon', 1.0    ],
-        ['Tue', 0.0    ],
-        ['Wen', 2.3    ],
-        ['Thu', 0.4    ],
-        ['Fri', 2.0    ],
-        ['Sat', 0.0    ],
-        ['Sun', 0.0    ]
-    ]);
+    function generateData() {
+        var arr = [['Day', 'Donated', { role: 'annotation' }]];
+
+        $('#chart-data li').each(function(index, elem) {
+            var $elem = $(elem);
+            arr.push([$elem.data('day'), $elem.data('amount'), $elem.data('amount')]);
+        });
+
+        return google.visualization.arrayToDataTable(arr);
+    }
+
+    var data = generateData();
 
     var chartDonator;
     if ((chartDonator = document.getElementById('chart-donator')) !== null) {
@@ -22,7 +24,7 @@ function drawChart() {
                 colors: ['#ff6600'],
                 legend: { position: 'none' },
                 chartArea: {
-                    width: '100%'
+                    width: '95%'
                 }
             });
     }
@@ -34,7 +36,7 @@ function drawChart() {
                 width: $('#chart-recipient').width(),
                 height: 200,
                 colors: ['#ff6600'],
-                legend: { position: 'none' },
+                //legend: { position: 'none' },
                 chartArea: {
                     width: '100%'
                 }
