@@ -12,11 +12,11 @@ class LogInType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('birthDate', 'text',array(
+        $builder->add('username', 'text',array(
             'constraints' => new \Symfony\Component\Validator\Constraints\NotBlank()
         ));
 
-        $builder->add('documentNumber', 'text',array(
+        $builder->add('code', 'password',array(
             'constraints' => new \Symfony\Component\Validator\Constraints\NotBlank()
         ));
 

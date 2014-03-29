@@ -14,19 +14,71 @@ use Tipr\ApplicationBundle\Entity\Recipient;
 class AuthenticationController extends BaseController
 {
     public function loginDonatorAction(){
+        $form = $this->createForm(new LogInType());
 
+        return $this->render('TiprApplicationBundle:Authentication:loginDonator.html.twig', array(
+            'form' => $form->createView()
+        ));
     }
 
-    public function loginDonatorProcess(){
+    public function loginDonatorProcessAction(Request $request){
+        $form = $this->createForm(new LogInType());
 
+        $form->handleRequest($request);
+
+        if($form->isValid()){
+            $data = $form->getData();
+
+            $donator = $this->getDoctrine()
+                ->getRepository('TiprApplicationBundle:Donator')
+                ->findOneBy(array('username' => $data['username'],'code' => $data['code']));
+
+            $cookie = $this->logIn($donator->getDocumentNumber(),$donator->getBirthday());
+
+            $request->getSession()->set('personId',$donator->getApiId());
+            $request->getSession()->set('cookie', $cookie);
+
+            return $this->redirect($this->generateUrl('tipr_application_m_donator_overview'));
+        }
+
+        return $this->render('TiprApplicationBundle:Authentication:loginDonator.html.twig', array(
+            'form' => $form->createView()
+        ));
     }
 
     public function loginRecipientAction(){
+        $form = $this->createForm(new LogInType());
 
+        return $this->render('TiprApplicationBundle:Authentication:loginRecipient.html.twig', array(
+            'form' => $form->createView()
+        ));
     }
 
-    public function loginRecipientProcess(){
+    public function loginRecipientProcessAction(Request $request){
+        $form = $this->createForm(new LogInType());
 
+        $form->handleRequest($request);
+
+
+        if($form->isValid()){
+            $data = $form->getData();
+
+            $recipient = $this->getDoctrine()
+                ->getRepository('TiprApplicationBundle:Recipient')
+                ->findOneBy(array('username' => $data['username'],'code' => $data['code']));
+
+            $cookie = $this->logIn($recipient->getDocumentNumber(),$recipient->getBirthday());
+
+            $request->getSession()->set('personId',$recipient->getApiId());
+            $request->getSession()->set('cookie', $cookie);
+
+            return $this->redirect($this->generateUrl('tipr_application_recipient_overview'));
+        }
+
+
+        return $this->render('TiprApplicationBundle:Authentication:loginRecipient.html.twig', array(
+            'form' => $form->createView()
+        ));
     }
 
 
