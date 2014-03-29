@@ -2,9 +2,7 @@
 
 namespace Tipr\ApplicationBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-class RecipientController extends Controller
+class RecipientController extends BaseController
 {
     public function indexAction()
     {

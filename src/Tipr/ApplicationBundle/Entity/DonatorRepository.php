@@ -12,4 +12,8 @@ use Doctrine\ORM\EntityRepository;
  */
 class DonatorRepository extends EntityRepository
 {
+    public function getDonations($donatorID){
+
+    }
+
 }
