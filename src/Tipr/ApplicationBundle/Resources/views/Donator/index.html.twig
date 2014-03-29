@@ -24,36 +24,17 @@
         </div>
 
         <ul id="chart-data">
-            {% for donation in donationsThisWeek %}
-                <li data-amount="{{ donation.amount }}"></li>
+            {% for day,amount in donationsThisWeek %}
+                <li data-day="{{ day }}" data-amount="{{ amount }}"></li>
             {% endfor %}
         </ul>
 
         <h2>Latest donations</h2>
         <ul data-role="listview" data-count-theme="b" data-inset="true">
             {% for donation in donations %}
-                <li>{{ donation.message }} <span class="ui-li-count">&#8364; {{ donation.amount | number_format(2, ',') }}</span></li>
+                <li>To: {{ donation.recipient.username }} <span class="ui-li-count">&#8364; {{ donation.amount | number_format(2, ',') }}</span></li>
             {% endfor %}
         </ul>
     </div><!-- /content -->
-
-
-    {{ donator.name }}
-
-    <ul>
-        {% for donation in donations %}
-            <li>{{ donation.message }}{{ donation.recipient }}{{ donation.amount }}{{ donation.date|date }}</li>
-        {% endfor %}
-    </ul>
-
-    {{ totalToday }}
-    {{ totalWeek }}
-    {{ totalMonth }}
-
-    <ul>
-        {% for day,amount in donationsThisWeek %}
-            <li>{{ day }} this {{ amount }}</li>
-        {% endfor %}
-    </ul>
 {% endblock %}
 
