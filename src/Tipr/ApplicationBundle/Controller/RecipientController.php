@@ -8,7 +8,6 @@ class RecipientController extends BaseController
 {
     public function indexAction(Request $request)
     {
-        var_dump($request->getSession()->get('personId'));
         // get recipient
         $recipient = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Recipient')

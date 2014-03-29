@@ -43,11 +43,6 @@ class RecipientRepository extends EntityRepository
         $start = strtotime("-1 week");
         $end = strtotime("tomorrow");
 
-//        echo $recipient;
-        echo  date('Y-m-d', $start);
-        echo " ";
-        echo  date('Y-m-d', $end);
-
         $qb = $this->_em->createQueryBuilder();
         $donations = $qb->select('c')
             ->from('Tipr\ApplicationBundle\Entity\Donation', 'c')
@@ -62,7 +57,6 @@ class RecipientRepository extends EntityRepository
 
         $totals = array();
         foreach ($donations as $donation) {
-            var_dump(date_format($donation->getDate(), 'Y/m/d'));
             if (isset($totals[date_format($donation->getDate(), 'Y/m/d')])) {
                 $totals[date_format($donation->getDate(), 'Y/m/d')] += $donation->getAmount();
             } else {
@@ -70,7 +64,6 @@ class RecipientRepository extends EntityRepository
             }
         }
 
-        var_dump($totals);
         return $totals;
     }
 
