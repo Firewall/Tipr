@@ -42,7 +42,7 @@
 
     <ul>
         {% for donation in donations %}
-            <li>{{ donation.message }}{{ donation.amount }}{{ donation.date|date }}</li>
+            <li>{{ donation.message }}{{ donation.recipient }}{{ donation.amount }}{{ donation.date|date }}</li>
         {% endfor %}
     </ul>
 
