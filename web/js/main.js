@@ -24,7 +24,7 @@ function drawChart() {
                 colors: ['#ff6600'],
                 legend: { position: 'none' },
                 chartArea: {
-                    width: '95%'
+                    width: '80%'
                 }
             });
     }
@@ -38,7 +38,7 @@ function drawChart() {
                 colors: ['#ff6600'],
                 //legend: { position: 'none' },
                 chartArea: {
-                    width: '100%'
+                    width: '80%'
                 }
             });
     }
