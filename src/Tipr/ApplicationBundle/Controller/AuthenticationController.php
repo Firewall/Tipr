@@ -50,7 +50,8 @@ class AuthenticationController extends BaseController
         $form = $this->createForm(new LogInType());
 
         return $this->render('TiprApplicationBundle:Authentication:loginRecipient.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'error' => false
         ));
     }
 
