@@ -6,7 +6,7 @@ use Httpful\Request as Api;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use GuzzleHttp\Client;
 
-class DefaultController extends Controller
+class DefaultController extends BaseController
 {
     public function indexAction()
     {

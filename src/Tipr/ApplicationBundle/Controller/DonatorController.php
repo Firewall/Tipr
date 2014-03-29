@@ -4,7 +4,7 @@ namespace Tipr\ApplicationBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DonatorController extends Controller{
+class DonatorController extends BaseController{
 
     public function indexAction()
     {
