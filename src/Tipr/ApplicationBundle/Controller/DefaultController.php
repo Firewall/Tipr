@@ -3,7 +3,6 @@
 namespace Tipr\ApplicationBundle\Controller;
 
 use Httpful\Request as Api;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use GuzzleHttp\Client;
 
 class DefaultController extends BaseController
