@@ -13,7 +13,6 @@ class DonatorController extends BaseController{
             ->getRepository('TiprApplicationBundle:Donator')
             ->find($id);
 
-
         // todo: get donations of donator
         $donations = $donator->getDonations();
 

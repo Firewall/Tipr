@@ -21,7 +21,7 @@ class AuthenticationController extends BaseController
     {
         $form = $this->createForm(new LogInType());
 
-        return $this->render('TiprApplicationBundle:Authentication:login.html.twig',array(
+        return $this->render('TiprApplicationBundle:Authentication:login.html.twig', array(
             'form' => $form->createView()
         ));
     }
@@ -34,41 +34,47 @@ class AuthenticationController extends BaseController
 
         $form->handleRequest($request);
 
-        if($form->isValid()){
+        if ($form->isValid()) {
             $data = $form->getData();
 
             $url = $this->api_base_url . "/openlogin/rest/ticket" . $this->api_key;
 
             $json['loginDocument'] = ['documentType' => 0, 'document' => $data['documentNumber']];
-            $json['birthday'] =  $data['birthDate'];
+            $json['birthday'] = $data['birthDate'];
 
-            $response = Api::post($url,json_encode($json), 'application/json')->send();
+            $response = Api::post($url, json_encode($json), 'application/json')->send();
 
             $ticket = $response->body->ticket;
 
             $client = new Client();
 
             $response = $client->post($this->api_base_url . '/openapi/login/auth/response' . $this->api_key, [
-                'headers' => ['Content-Type' => 'application/x-www-form-urlencoded'],
-                'body'    => ['ticket' => $ticket]
-            ]);
+                    'headers' => ['Content-Type' => 'application/x-www-form-urlencoded'],
+                    'body' => ['ticket' => $ticket]
+                ]);
 
             // get cookie
             $cookie = $response->getHeader('set-cookie');
 
-            $client = $this->api_get('/openapi/rest/client',$cookie);
+            $client = $this->api_get('/openapi/rest/client', $cookie);
 
-            if($cookie && $client->personId){
-                $request->getSession()->set('cookie',$cookie);
-                $request->getSession()->set('personId',$client->personId);
-            }else{
+            if ($cookie && isset($client['personId'])) {
+                $request->getSession()->set('cookie', $cookie);
+                $request->getSession()->set('personId', $client['personId']);
+            } else {
                 $error = 'Incorrect document number or birthday';
             }
         }
 
-        return $this->render('TiprApplicationBundle:Authentication:login.html.twig',array(
+        return $this->render('TiprApplicationBundle:Authentication:login.html.twig', array(
             'form' => $form->createView(),
             'error' => $error
         ));
+    }
+
+    public function logout(Request $request)
+    {
+        $request->getSession()->remove('cookie');
+        $request->getSession()->remove('personId');
     }
 } 
