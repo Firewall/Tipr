@@ -54,6 +54,10 @@ class RecipientController extends BaseController
             ->getRepository('TiprApplicationBundle:Recipient')
             ->findOneBy(array('apiId' => $request->getSession()->get('personId')));
 
+        if(!$recipient){
+
+        }
+
         return $this->render('TiprApplicationBundle:Recipient:settings.html.twig', array(
             'recipient' => $recipient,
         ));
