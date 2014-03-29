@@ -29,7 +29,7 @@
             {% endfor %}
         </ul>
 
-        <h2>Latest donations</h2>
+        <h2>Recent donations</h2>
         <ul data-role="listview" data-count-theme="b" data-inset="true">
             {% for donation in donations %}
                 <li>To: {{ donation.recipient.username }} <span class="ui-li-count">&#8364; {{ donation.amount | number_format(2, ',') }}</span></li>
