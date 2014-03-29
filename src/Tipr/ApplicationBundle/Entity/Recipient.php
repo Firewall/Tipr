@@ -21,6 +21,28 @@ class Recipient
      */
     private $id;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="apiId", type="integer")
+     */
+    private $api_id;
+
+    /**
+     * @param int $api_id
+     */
+    public function setApiId($api_id)
+    {
+        $this->api_id = $api_id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getApiId()
+    {
+        return $this->api_id;
+    }
 
     /**
      * Get id

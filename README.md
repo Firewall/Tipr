@@ -17,3 +17,9 @@ Navigate to deployment directory
 eval `ssh-agent`
 ssh-add
 ```
+
+
+#Create database
+
+C:\wamp\www\Tipr>php app/console doctrine:database:create
+C:\wamp\www\Tipr>php app/console doctrine:schema:create

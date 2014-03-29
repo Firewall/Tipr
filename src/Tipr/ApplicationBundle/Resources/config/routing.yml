@@ -1,3 +1,27 @@
 tipr_application_homepage:
     pattern:  /
     defaults: { _controller: TiprApplicationBundle:Default:index }
+
+#general
+
+tipr_application_login:
+    pattern: /login
+    defaults: { _controller: TiprApplicationBundle:Authentication:login }
+    methods: [GET]
+
+tipr_application_loginProcess:
+    pattern: /login
+    defaults: { _controller: TiprApplicationBundle:Authentication:loginProcess }
+    methods: [POST]
+
+#donator
+
+tipr_application_m_donator_overview:
+    pattern:  /m/
+    defaults: { _controller: TiprApplicationBundle:Donator:index }
+
+#recipient
+
+tipr_application_recipient_overview:
+    pattern:  /overview
+    defaults: { _controller: TiprApplicationBundle:Recipient:index }
