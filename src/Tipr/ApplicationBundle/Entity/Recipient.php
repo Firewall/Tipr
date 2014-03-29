@@ -66,7 +66,7 @@ class Recipient
     /**
      * @var string
      *
-     * @ORM\Column(name="message", type="string", length=255,nullable=true)
+     * @ORM\Column(name="code", type="string", length=255,nullable=true)
      */
     private $code;
 
