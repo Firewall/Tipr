@@ -11,7 +11,7 @@ class RecipientController extends BaseController
         // get recipient
         $recipient = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Recipient')
-            ->findOneBy(array('apiId' => $request->getSession()->get('personId')));
+            ->findOneBy(array('api_key' => $request->getSession()->get('personId')));
 
         $recentDonations = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Recipient')
@@ -43,22 +43,25 @@ class RecipientController extends BaseController
         ));
     }
 
-    public function settingsAction()
+    public function settingsAction(Request $request)
     {
+        $recipient = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Recipient')
+            ->findOneBy(array('apiId' => $request->getSession()->get('personId')));
 
-
-        return $this->render('TiprApplicationBundle:Recipient:index.html.twig', array(
+        return $this->render('TiprApplicationBundle:Recipient:settings.html.twig', array(
             'recipient' => $recipient,
-            'recentDonations' => $recentDonations,
-            'highestDonations' => $highestDonations,
-            'donationsThisDay' => $donationsThisDay,
-            'donationsThisWeek' => $donationsThisWeek,
-            'donationsThisMonth' => $donationsThisMonth
         ));
     }
 
-    public function settingsProcessAction()
+    public function settingsProcessAction(Request $request)
     {
+        $recipient = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Recipient')
+            ->findOneBy(array('apiId' => $request->getSession()->get('personId')));
 
+        return $this->render('TiprApplicationBundle:Recipient:settings.html.twig', array(
+            'recipient' => $recipient,
+        ));
     }
 } 
