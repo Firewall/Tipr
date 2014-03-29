@@ -11,7 +11,7 @@ class RecipientController extends BaseController
         // get recipient
         $recipient = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Recipient')
-            ->findOneBy(array('api_key' => $request->getSession()->get('personId')));
+            ->findOneBy(array('api_id' => $request->getSession()->get('personId')));
 
         $donationsWeek = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Recipient')
