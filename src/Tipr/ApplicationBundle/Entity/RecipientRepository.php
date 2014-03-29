@@ -38,7 +38,7 @@ class RecipientRepository extends EntityRepository
             ->getResult();
     }
 
-    public function getDonationsThisWeek($recipient)
+    public function getDonationsThisWeekPerDay($recipient)
     {
         $start = strtotime("-1 month");
         $end = strtotime("tomorrow");

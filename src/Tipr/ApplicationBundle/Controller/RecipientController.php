@@ -13,6 +13,10 @@ class RecipientController extends BaseController
             ->getRepository('TiprApplicationBundle:Recipient')
             ->find($id);
 
+        $donationsWeek = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Recipient')
+            ->getDonationsThisWeekPerDay($recipient->getId());
+
         $recentDonations = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Recipient')
             ->getRecentDonationsLimit($recipient->getId(), 13);
@@ -23,19 +27,20 @@ class RecipientController extends BaseController
 
         $donationsThisDay = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Recipient')
-            ->getDonationsThisWeek($recipient->getId());
+            ->getTotalThisDay($recipient->getId());
 
         $donationsThisWeek = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Recipient')
-            ->getDonationsThisWeek($recipient->getId());
+            ->getTotalThisWeek($recipient->getId());
 
         $donationsThisMonth = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Recipient')
-            ->getDonationsThisWeek($recipient->getId());
+            ->getTotalThisMonth($recipient->getId());
 
         return $this->render('TiprApplicationBundle:Recipient:index.html.twig', array(
             'recipient' => $recipient,
             'recentDonations' => $recentDonations,
+            'donationsThisWeek' => $donationsWeek,
             'highestDonations' => $highestDonations,
             'totalToday' => $donationsThisDay,
             'totalWeek' => $donationsThisWeek,

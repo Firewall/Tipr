@@ -29,7 +29,13 @@
             <div class="pure-g">
                 <div class="pure-u-2-3">
                     <div class="box">
-                        <div id="chart_div" class="bigchart"></div>
+                        <div id="chart_div" class="bigchart">
+                            <ul>
+                                {% for day,amount in donationsThisWeek %}
+                                    <li data-day="{{ day }}" data-amount="{{ amount }}"></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     </div>
                     <div class="pure-g">
                         <div class="pure-u-1-2">
