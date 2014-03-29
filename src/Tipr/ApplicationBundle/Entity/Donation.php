@@ -48,6 +48,11 @@ class Donation
     private $donator;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Tipr\ApplicationBundle\Entity\Recipient",inversedBy="donnations")
+     */
+    private $recipient;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -126,5 +131,35 @@ class Donation
         return $this->date;
     }
 
+    /**
+     * @param mixed $donator
+     */
+    public function setDonator($donator)
+    {
+        $this->donator = $donator;
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getDonator()
+    {
+        return $this->donator;
+    }
+
+    /**
+     * @param mixed $recipient
+     */
+    public function setRecipient($recipient)
+    {
+        $this->recipient = $recipient;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRecipient()
+    {
+        return $this->recipient;
+    }
 }
