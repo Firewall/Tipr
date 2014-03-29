@@ -22,8 +22,6 @@ class DonatorController extends BaseController
             ->getRepository('TiprApplicationBundle:Donator')
             ->getDonationsThisWeek($donator->getId());
 
-        var_dump($donationsThisWeek);
-
         $totalDay = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Donator')
             ->getTotalThisDay($donator->getId());
