@@ -50,6 +50,14 @@ tipr_application_m_donator_overview:
     pattern:  /m/overview
     defaults: { _controller: TiprApplicationBundle:Donator:index }
 
+tipr_application_m_donator_donate:
+    pattern:  /m/donate/{username}
+    defaults: { _controller: TiprApplicationBundle:Donator:donate }
+
+tipr_application_m_donator_donateProcess:
+    pattern:  /m/donate/{username}
+    defaults: { _controller: TiprApplicationBundle:Donator:donateProcess }
+
 #recipient
 
 tipr_application_recipient_overview:

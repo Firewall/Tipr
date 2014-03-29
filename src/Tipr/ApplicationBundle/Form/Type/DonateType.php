@@ -16,7 +16,11 @@ class DonateType extends AbstractType {
             'constraints' => new \Symfony\Component\Validator\Constraints\NotBlank()
         ));
 
-        $builder->add('documentNumber', 'text',array(
+        $builder->add('username', 'text',array(
+            'constraints' => new \Symfony\Component\Validator\Constraints\NotBlank()
+        ));
+
+        $builder->add('code', 'password',array(
             'constraints' => new \Symfony\Component\Validator\Constraints\NotBlank()
         ));
 

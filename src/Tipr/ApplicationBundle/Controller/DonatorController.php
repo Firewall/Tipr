@@ -2,6 +2,10 @@
 
 namespace Tipr\ApplicationBundle\Controller;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Tipr\ApplicationBundle\Form\Type\DonateType;
+use Symfony\Component\HttpFoundation\Request;
+
 class DonatorController extends BaseController
 {
 
@@ -34,23 +38,64 @@ class DonatorController extends BaseController
         ));
     }
 
-    public function donateAction($displayname)
+    public function donateAction($username)
     {
-        $donator = $this->getDoctrine()
-            ->getRepository('TiprApplicationBundle:Donator')
-            ->findOneBy(array('displayname' => $displayname));
+        $form = $this->createForm(new DonateType());
 
-        if(!$donator){
+        $recipient = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Recipient')
+            ->findOneBy(array('username' => $username));
+
+        if(!$recipient){
             throw new NotFoundHttpException();
         }
 
         return $this->render('TiprApplicationBundle:Donator:donate.html.twig', array(
-            'donator' => $donator,
+            'recipient' => $recipient,
+            'username' => $username,
+            'form' => $form->createView()
         ));
     }
 
-    public function donateProcessAction()
+    public function donateProcessAction(Request $request,$username)
     {
+        var_dump('test');
 
+        $recipient = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Recipient')
+            ->findOneBy(array('username' => $username));
+
+        if(!$recipient){
+            throw new NotFoundHttpException();
+        }
+
+        $form = $this->createForm(new DonateType());
+        $form->handleRequest($request);
+
+        if($form->isValid()){
+            $data = $form->getData();
+
+            // check data again
+            $donator = $this->getDoctrine()
+                ->getRepository('TiprApplicationBundle:Donator')
+                ->findOneBy(array('username' => $data['username'],'code' => $data['code']));
+
+            if($donator == null){
+                $error = '';
+            }else{
+                // log in if not logged in
+                $cookie = $request->getSession()->get('cookie') ?: $this->logIn($donator->getDocumentNumber(),$donator->getBirthDay());
+                $request->getSession()->set('cookie',$cookie);
+                $request->getSession()->set('personId',$donator->getApiId());
+
+                var_dump($this->api_get('/openapi/rest/products',$cookie));
+            }
+        }
+
+        return $this->render('TiprApplicationBundle:Donator:donate.html.twig', array(
+            'recipient' => $recipient,
+            'username' => $username,
+            'form' => $form->createView()
+        ));
     }
 } 

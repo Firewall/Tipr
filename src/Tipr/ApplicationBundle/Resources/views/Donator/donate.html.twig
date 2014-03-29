@@ -1,0 +1,64 @@
+{% extends "TiprApplicationBundle:Base:layout.html.twig" %}
+
+{% set title = 'Overview' %}
+
+{% block pageContent %}
+<div role="main" class="ui-content jqm-content jqm-fullwidth">
+    <div class="ui-grid-b ui-corner-all">
+        <div class="ui-block-a">
+            <div class="ui-bar ui-bar-a">Today<br/></div>
+            <div class="ui-body ui-body-a">&#8364;3,00</div>
+        </div>
+        <div class="ui-block-b">
+            <div class="ui-bar ui-bar-a">This week<br/></div>
+            <div class="ui-body ui-body-a">&#8364;3,00</div>
+        </div>
+        <div class="ui-block-c">
+            <div class="ui-bar ui-bar-a">This month</div>
+            <div class="ui-body ui-body-a">&#8364;3,00</div>
+        </div>
+    </div>
+
+    <div data-theme="a" data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all separate">
+        <div id="chart" style="width: 100%; height: 200px;"></div>
+    </div>
+
+    <ul data-role="listview" data-count-theme="b" data-inset="true">
+        <li>John Doe <span class="ui-li-count">&#8364;1,00</span></li>
+        <li>John Doe <span class="ui-li-count">&#8364;1,00</span></li>
+        <li>John Doe <span class="ui-li-count">&#8364;1,00</span></li>
+    </ul>
+</div>
+
+    <form class="form-horizontal" role="form" action="{{ path('tipr_application_m_donator_donateProcess',{'username' : username}) }}" {{ form_enctype(form) }} method="post"
+          novalidate="novalidate">
+        <div class="form-group">
+            {{ form_label(form.username,null,{'label_attr': {'class': 'col-sm-2' }}) }}
+            <div class="col-sm-9">
+                {{ form_widget(form.username, {'attr': {'class': 'form-control' }}) }}
+                {{ form_errors(form.username) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.code,null,{'label_attr': {'class': 'col-sm-2' }}) }}
+            <div class="col-sm-10">
+                {{ form_widget(form.code, {'attr': {'class': 'form-control' }}) }}
+                {{ form_errors(form.code) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.amount,null,{'label_attr': {'class': 'col-sm-2' }}) }}
+            <div class="col-sm-10">
+                {{ form_widget(form.amount, {'attr': {'class': 'form-control' }}) }}
+                {{ form_errors(form.amount) }}
+            </div>
+        </div>
+
+        {{ form_widget(form.send,{'attr' : {'class' : 'btn btn-primary' }}) }}
+
+        {{ form_widget(form._token) }}
+    </form>
+{% endblock %}
+
