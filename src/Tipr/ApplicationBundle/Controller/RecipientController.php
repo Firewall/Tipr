@@ -37,9 +37,9 @@ class RecipientController extends BaseController
             'recipient' => $recipient,
             'recentDonations' => $recentDonations,
             'highestDonations' => $highestDonations,
-            'donationsThisDay' => $donationsThisDay,
-            'donationsThisWeek' => $donationsThisWeek,
-            'donationsThisMonth' => $donationsThisMonth
+            'totalToday' => $donationsThisDay,
+            'totalWeek' => $donationsThisWeek,
+            'totalMonth' => $donationsThisMonth
         ));
     }
 } 
