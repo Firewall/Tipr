@@ -29,7 +29,17 @@ class DefaultController extends Controller
             'body'    => ['ticket' => $ticket]
         ]);
 
-        var_dump($response);
+        $cookie = $response->getHeader('set-cookie');
+
+        var_dump($cookie);
+
+        $response = $client->get('https://apisandbox.ingdirect.es/openapi/rest/client?apikey=IEjdcD3VfCF63pRDE4DrviMi9zA30GI8', [
+            'headers' => ['Cookie' => $cookie]
+        ]);
+
+        $json = json_decode($response->getBody());
+
+        var_dump($json);
 
         return $this->render('TiprApplicationBundle:Default:index.html.twig', array('name' => 'Tipr'));
     }
