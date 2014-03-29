@@ -85,6 +85,8 @@ class DonatorController extends BaseController
         $form->handleRequest($request);
 
         if($form->isValid()){
+            var_dump('hey');
+
             $data = $form->getData();
 
             // check data again
@@ -95,12 +97,40 @@ class DonatorController extends BaseController
             if($donator == null){
                 $error = '';
             }else{
+//                $cookie = $request->getSession()->get('cookie');
+//
+//                if($cookie){
+//                    // todo: renew
+//                    $this->api_renew($cookie);
+//                }
+
                 // log in if not logged in
-                $cookie = $request->getSession()->get('cookie') ?: $this->logIn($donator->getDocumentNumber(),$donator->getBirthDay());
+                $cookie = $this->logIn($donator->getDocumentNumber(),$donator->getBirthDay());
                 $request->getSession()->set('cookie',$cookie);
                 $request->getSession()->set('personId',$donator->getApiId());
 
-                var_dump($this->api_get('/openapi/rest/products',$cookie));
+                //todo: get from donator
+                $iban = 'ES25 1465 0100 92 1708339378';
+
+                $products = $this->api_get('/openapi/rest/products',$cookie);
+
+                $pProduct = null;
+                foreach($products as $product){
+                    if($product['iban'] = $product){
+                        $pProduct = $product['iban'];
+                        break;
+                    }
+                }
+
+                //var_dump($products);
+
+                //var_dump($this->api_get('/openapi/rest/prepare-movemoney',$cookie));
+                //$pProduct
+
+
+
+                // make transfer
+                $this->make_transfer();
             }
         }
 

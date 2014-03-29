@@ -53,10 +53,12 @@ tipr_application_m_donator_overview:
 tipr_application_m_donator_donate:
     pattern:  /m/donate/{username}
     defaults: { _controller: TiprApplicationBundle:Donator:donate }
+    methods: [GET]
 
 tipr_application_m_donator_donateProcess:
     pattern:  /m/donate/{username}
     defaults: { _controller: TiprApplicationBundle:Donator:donateProcess }
+    methods: [POST]
 
 #recipient
 
