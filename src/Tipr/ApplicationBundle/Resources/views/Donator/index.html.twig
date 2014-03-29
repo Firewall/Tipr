@@ -51,8 +51,8 @@
     {{ totalMonth }}
 
     <ul>
-        {% for donation in donationsThisWeek %}
-            <li>{{ donation.amount }} {{ donation.date|date }} {{ donation.message }} {{ donation.amount }} {{ donation.date|date }}</li>
+        {% for day,amount in donationsThisWeek %}
+            <li>{{ day }} this {{ amount }}</li>
         {% endfor %}
     </ul>
 {% endblock %}

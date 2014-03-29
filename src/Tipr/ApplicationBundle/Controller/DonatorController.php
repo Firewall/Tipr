@@ -14,22 +14,36 @@ class DonatorController extends BaseController
             ->getRepository('TiprApplicationBundle:Donator')
             ->find($id);
 
-        // todo: get donations of donator
         $donations = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Donator')
-            ->getDonationsLimit($donator->getId(), 13);
+            ->getDonationsLimit($donator->getId(), 5);
 
         $donationsThisWeek = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Donator')
             ->getDonationsThisWeek($donator->getId());
 
+        var_dump($donationsThisWeek);
+
+        $totalDay = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Donator')
+            ->getTotalThisDay($donator->getId());
+
+        $totalWeek = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Donator')
+            ->getTotalThisWeek($donator->getId());
+
+
+        $totalMonth  = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Donator')
+            ->getTotalThisMonth($donator->getId());
+
 
         return $this->render('TiprApplicationBundle:Donator:index.html.twig', array(
             'donator' => $donator,
             'donations' => $donations,
-            'totalToday' => 5.00,
-            'totalWeek' => 12.00,
-            'totalMonth' => 150.00,
+            'totalToday' => $totalDay,
+            'totalWeek' => $totalWeek,
+            'totalMonth' => $totalMonth,
             'donationsThisWeek' => $donationsThisWeek
         ));
     }
