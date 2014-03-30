@@ -11,14 +11,14 @@
                     <div class="phonewrapper">
                         <div class="overlay">
                             <div class="userinfo">
-                                <h2>Steve</h2>
+                                <h2>{{ recipient.username }}</h2>
 
-                                <p>Ghent - I play Guitar</p>
+                                <p>{{ recipient.place }} - {{ recipient.activity }}</p>
                             </div>
                             <img src="http://lorempixel.com/250/150" alt="profile"/>
                         </div>
                         <div class="aboutuser">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                            <p>{{ recipient.about }}</p>
                         </div>
                         <div class="pure-g social">
                             <div class="pure-u-1-3">
@@ -33,9 +33,11 @@
                                 <a href="{{ recipient.youtube }}"><i class="fa fa-youtube-play"></i> Youtube</a>
                             </div>
                         </div>
+                        {% if recipient.showstats == true %}
                         <div class="stats">
 
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

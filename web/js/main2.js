@@ -40,7 +40,8 @@ function drawChart() {
                 legend: { position: 'none' },
                 chartArea: {
                     width: '80%'
-                }
+                },
+                vAxis: {viewWindowMode: "explicit", viewWindow:{ min: 0 }}
             });
     }
 }
