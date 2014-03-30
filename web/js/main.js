@@ -3,12 +3,26 @@ google.setOnLoadCallback(drawChart);
 
 function drawChart() {
     function generateData() {
-        var arr = [['Day', 'Donated', { role: 'annotation' }]];
+        var arr = [];
 
         $('#chart-data li').each(function(index, elem) {
             var $elem = $(elem);
             arr.push([$elem.data('day'), $elem.data('amount'), $elem.data('amount')]);
         });
+
+        if (!arr.length < 7) {
+
+
+            var date = moment(new Date()).subtract('days', arr.length);
+            for (var i = arr.length; i < 7; i++) {
+                date.subtract('days', 1);
+                arr.push([date.format('MMM DD'), 0, 0]);
+            }
+        }
+
+        arr.push(['Day', 'Donated', { role: 'annotation', format: '0.00' }]);
+
+        arr = arr.reverse();
 
         return google.visualization.arrayToDataTable(arr);
     }
@@ -19,12 +33,16 @@ function drawChart() {
     if ((chartDonator = document.getElementById('chart-donator')) !== null) {
         new google.visualization.ColumnChart(chartDonator).
             draw(data, {
-                width: $('#chart-donator').width(),
+                width: $('#chart_div').width(),
                 height: 200,
                 colors: ['#ff6600'],
                 legend: { position: 'none' },
                 chartArea: {
                     width: '80%'
+                },
+                vAxis: {
+                    viewWindowMode: 'explicit',
+                    viewWindow:{ min: 0 }
                 }
             });
     }
