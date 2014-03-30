@@ -20,7 +20,7 @@ function drawChart() {
             }
         }
 
-        arr.push(['Day', 'Donated', { role: 'annotation' }]);
+        arr.push(['Day', 'Donated', { role: 'annotation', format: '0.00' }]);
 
         arr = arr.reverse();
 
@@ -40,7 +40,10 @@ function drawChart() {
                 chartArea: {
                     width: '80%'
                 },
-                vAxis: {viewWindowMode: "explicit", viewWindow:{ min: 0 }}
+                vAxis: {
+                    viewWindowMode: 'explicit',
+                    viewWindow:{ min: 0 }
+                }
             });
     }
 }
