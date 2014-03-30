@@ -25,10 +25,10 @@
     <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="a" id="nav-panel">
         <ul data-role="listview">
             <li data-icon="delete"><a href="#" data-rel="close">Close menu</a></li>
-            <li><a href="{{ path('tipr_application_m_donator_overview') }}">Overview</a></li>
-            <li><a href="{{ path('tipr_application_m_donator_badges') }}">Badges</a></li>
-            <li><a href="{{ path('tipr_application_m_donator_settings') }}">Settings</a></li>
-            <li><a href="{{ path('tipr_application_logoutDonatorProcess') }}">Logout</a></li>
+            <li><a data-ajax="false" href="{{ path('tipr_application_m_donator_overview') }}">Overview</a></li>
+            <li><a data-ajax="false" href="{{ path('tipr_application_m_donator_badges') }}">Badges</a></li>
+            <li><a data-ajax="false" href="{{ path('tipr_application_m_donator_settings') }}">Settings</a></li>
+            <li><a data-ajax="false" href="{{ path('tipr_application_logoutDonatorProcess') }}">Logout</a></li>
         </ul>
     </div>
     <!-- /panel -->
