@@ -23,7 +23,6 @@ function drawChart() {
         arr.push(['Day', 'Donated', { role: 'annotation' }]);
 
         arr = arr.reverse();
-        debugger;
 
         return google.visualization.arrayToDataTable(arr);
     }
@@ -45,3 +44,28 @@ function drawChart() {
             });
     }
 }
+
+var $account_username = $('#account_username');
+$account_username.on('input', function() {
+    $('.userinfo h2').html($account_username.val());
+});
+
+var $account_place = $('#account_place');
+$account_place.on('input', function() {
+    $('#userplace').html($account_place.val());
+});
+
+var $account_activity = $('#account_activity');
+$account_activity.on('change', function() {
+   $('#useractivity').html($account_activity.find('option:selected').text());
+});
+
+var $account_about = $('#account_about');
+$account_about.on('input', function() {
+    $('#aboutuser p').html($account_about.val());
+});
+
+var $account_goal = $('#account_goal');
+$account_goal.on('input', function() {
+    $('#goaluser span').html($account_goal.val());
+});
