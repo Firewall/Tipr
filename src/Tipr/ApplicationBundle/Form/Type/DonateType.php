@@ -12,7 +12,7 @@ class DonateType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('amount', 'number',array(
+        $builder->add('amount', 'integer',array(
             'constraints' => new \Symfony\Component\Validator\Constraints\NotBlank()
         ));
 
