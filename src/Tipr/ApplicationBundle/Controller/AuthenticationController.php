@@ -13,7 +13,8 @@ use Tipr\ApplicationBundle\Entity\Recipient;
 
 class AuthenticationController extends BaseController
 {
-    public function loginDonatorAction(){
+    public function loginDonatorAction()
+    {
         $form = $this->createForm(new LogInType());
 
         return $this->render('TiprApplicationBundle:Authentication:loginDonator.html.twig', array(
@@ -21,21 +22,22 @@ class AuthenticationController extends BaseController
         ));
     }
 
-    public function loginDonatorProcessAction(Request $request){
+    public function loginDonatorProcessAction(Request $request)
+    {
         $form = $this->createForm(new LogInType());
 
         $form->handleRequest($request);
 
-        if($form->isValid()){
+        if ($form->isValid()) {
             $data = $form->getData();
 
             $donator = $this->getDoctrine()
                 ->getRepository('TiprApplicationBundle:Donator')
-                ->findOneBy(array('username' => $data['username'],'code' => $data['code']));
+                ->findOneBy(array('username' => $data['username'], 'code' => $data['code']));
 
-            $cookie = $this->logIn($donator->getDocumentNumber(),$donator->getBirthday());
+            $cookie = $this->logIn($donator->getDocumentNumber(), $donator->getBirthday());
 
-            $request->getSession()->set('personId',$donator->getApiId());
+            $request->getSession()->set('personId', $donator->getApiId());
             $request->getSession()->set('cookie', $cookie);
 
             return $this->redirect($this->generateUrl('tipr_application_m_donator_overview'));
@@ -46,7 +48,8 @@ class AuthenticationController extends BaseController
         ));
     }
 
-    public function loginRecipientAction(){
+    public function loginRecipientAction()
+    {
         $form = $this->createForm(new LogInType());
 
         return $this->render('TiprApplicationBundle:Authentication:loginRecipient.html.twig', array(
@@ -55,22 +58,23 @@ class AuthenticationController extends BaseController
         ));
     }
 
-    public function loginRecipientProcessAction(Request $request){
+    public function loginRecipientProcessAction(Request $request)
+    {
         $form = $this->createForm(new LogInType());
 
         $form->handleRequest($request);
 
 
-        if($form->isValid()){
+        if ($form->isValid()) {
             $data = $form->getData();
 
             $recipient = $this->getDoctrine()
                 ->getRepository('TiprApplicationBundle:Recipient')
-                ->findOneBy(array('username' => $data['username'],'code' => $data['code']));
+                ->findOneBy(array('username' => $data['username'], 'code' => $data['code']));
 
-            $cookie = $this->logIn($recipient->getDocumentNumber(),$recipient->getBirthday());
+            $cookie = $this->logIn($recipient->getDocumentNumber(), $recipient->getBirthday());
 
-            $request->getSession()->set('personId',$recipient->getApiId());
+            $request->getSession()->set('personId', $recipient->getApiId());
             $request->getSession()->set('cookie', $cookie);
 
             return $this->redirect($this->generateUrl('tipr_application_recipient_overview'));
@@ -113,7 +117,7 @@ class AuthenticationController extends BaseController
         if ($form->isValid()) {
             $data = $form->getData();
 
-            $cookie = $this->logIn($data['documentNumber'],$data['birthDate']);
+            $cookie = $this->logIn($data['documentNumber'], $data['birthDate']);
             $client = $this->api_get('/openapi/rest/client', $cookie);
 
             if ($cookie && isset($client['personId'])) {
@@ -123,7 +127,7 @@ class AuthenticationController extends BaseController
                     ->getRepository('TiprApplicationBundle:Donator')
                     ->findOneBy(array('api_id' => $client['personId']));
 
-                if($donator == null){
+                if ($donator == null) {
                     $donator = new Donator();
                     $donator->setName($client['name']);
                     $donator->setSurname($client['firstSurname']);
@@ -141,8 +145,7 @@ class AuthenticationController extends BaseController
                     $request->getSession()->set('cookie', $cookie);
 
                     return $this->redirect($this->generateUrl('tipr_application_m_donator_overview'));
-                }
-                else{
+                } else {
                     $error = 'Already registered';
                 }
             } else {
@@ -167,7 +170,7 @@ class AuthenticationController extends BaseController
         if ($form->isValid()) {
             $data = $form->getData();
 
-            $cookie = $this->logIn($data['documentNumber'],$data['birthDate']);
+            $cookie = $this->logIn($data['documentNumber'], $data['birthDate']);
             $client = $this->api_get('/openapi/rest/client', $cookie);
 
             if ($cookie && isset($client['personId'])) {
@@ -177,7 +180,7 @@ class AuthenticationController extends BaseController
                     ->getRepository('TiprApplicationBundle:Recipient')
                     ->findOneBy(array('api_id' => $client['personId']));
 
-                if($recipient == null){
+                if ($recipient == null) {
 
                     $recipient = new Recipient();
                     $recipient->setName($client['name']);
@@ -196,8 +199,7 @@ class AuthenticationController extends BaseController
                     $request->getSession()->set('cookie', $cookie);
 
                     return $this->redirect($this->generateUrl('tipr_application_recipient_overview'));
-                }
-                else{
+                } else {
                     $error = 'Already registered';
                 }
             } else {
@@ -216,5 +218,12 @@ class AuthenticationController extends BaseController
         $request->getSession()->remove('cookie');
         $request->getSession()->remove('personId');
         return $this->redirect($this->generateUrl('tipr_application_loginRecipientProcess'));
+    }
+
+    public function logoutDonatorProcessAction(Request $request)
+    {
+        $request->getSession()->remove('cookie');
+        $request->getSession()->remove('personId');
+        return $this->redirect($this->generateUrl('tipr_application_loginDonatorProcess'));
     }
 } 
