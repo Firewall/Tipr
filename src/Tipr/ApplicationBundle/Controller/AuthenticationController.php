@@ -220,7 +220,7 @@ class AuthenticationController extends BaseController
                     $request->getSession()->set('personId', $client['personId']);
                     $request->getSession()->set('cookie', $cookie);
 
-                    return $this->redirect($this->generateUrl('tipr_application_recipient_overview'));
+                    return $this->redirect($this->generateUrl('tipr_application_recipient_settings'));
                 } else {
                     $error = 'Already registered';
                 }
