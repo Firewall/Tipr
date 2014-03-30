@@ -56,9 +56,9 @@ class DonatorController extends BaseController
 
     public function donateAction(Request $request, $username)
     {
-        if (!$this->check_login($request->getSession())) {
-            return $this->redirect($this->generateUrl('tipr_application_logoutDonatorProcess'));
-        }
+//        if (!$this->check_login($request->getSession())) {
+//            return $this->redirect($this->generateUrl('tipr_application_logoutDonatorProcess'));
+//        }
 
         $form = $this->createForm(new DonateType());
 
@@ -100,9 +100,9 @@ class DonatorController extends BaseController
 
     public function donateProcessAction(Request $request, $username)
     {
-        if (!$this->check_login($request->getSession())) {
-            return $this->redirect($this->generateUrl('tipr_application_logoutDonatorProcess'));
-        }
+//        if (!$this->check_login($request->getSession())) {
+//            return $this->redirect($this->generateUrl('tipr_application_logoutDonatorProcess'));
+//        }
 
         $recipient = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Recipient')
@@ -124,8 +124,6 @@ class DonatorController extends BaseController
                 ->findOneBy(array('username' => $data['username'], 'code' => $data['code']));
 
             if ($donator == null) {
-                var_dump('null');
-                throw new \Exception();
                 $error = '';
             } else {
 //                $cookie = $request->getSession()->get('cookie');
