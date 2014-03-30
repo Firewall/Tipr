@@ -29,6 +29,11 @@ tipr_application_logoutRecipientProcess:
     defaults: { _controller: TiprApplicationBundle:Authentication:logoutRecipientProcess }
     methods: [GET]
 
+tipr_application_logoutDonatorProcess:
+    pattern: /m/logout
+    defaults: { _controller: TiprApplicationBundle:Authentication:logoutDonatorProcess }
+    methods: [GET]
+
 tipr_application_registerDonator:
     pattern: /m/register
     defaults: { _controller: TiprApplicationBundle:Authentication:registerDonator }

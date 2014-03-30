@@ -10,8 +10,11 @@ use Tipr\ApplicationBundle\Entity\Donation;
 class DonatorController extends BaseController
 {
 
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        if(!$this->check_login($request->getSession())){
+            return $this->redirect($this->generateUrl('tipr_application_logoutDonatorProcess'));
+        }
         // todo: find donator id in sessions
         $id = 1;
 
@@ -51,8 +54,12 @@ class DonatorController extends BaseController
         ));
     }
 
-    public function donateAction($username)
+    public function donateAction(Request $request, $username)
     {
+        if(!$this->check_login($request->getSession())){
+            return $this->redirect($this->generateUrl('tipr_application_logoutDonatorProcess'));
+        }
+
         $form = $this->createForm(new DonateType());
 
         $recipient = $this->getDoctrine()
@@ -72,7 +79,9 @@ class DonatorController extends BaseController
 
     public function donateProcessAction(Request $request,$username)
     {
-        var_dump('test');
+        if(!$this->check_login($request->getSession())){
+            return $this->redirect($this->generateUrl('tipr_application_logoutDonatorProcess'));
+        }
 
         $recipient = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Recipient')
