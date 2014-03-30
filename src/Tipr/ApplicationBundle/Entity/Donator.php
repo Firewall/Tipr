@@ -76,6 +76,11 @@ class Donator
     public $donnations;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Tipr\ApplicationBundle\Entity\Badge")
+     */
+    public $badges;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="apiId", type="integer")

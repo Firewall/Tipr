@@ -192,12 +192,27 @@ class DonatorController extends BaseController
             throw new \Exception();
         }
 
+        $badge1 = false;
+        $badge2 = false;
+        $badge3 = false;
+
+        if(sizeof($donator->getDonations()) == 1){
+            $badge1 = true;
+        }elseif(sizeof($donator->getDonations()) == 5){
+            $badge2 = true;
+        }elseif(sizeof($donator->getDonations()) == 10){
+            $badge3 = true;
+        }
+
         $cookie = $this->logIn($donator->getDocumentNumber(), $donator->getBirthDay());
         $request->getSession()->set('cookie', $cookie);
 
         return $this->render('TiprApplicationBundle:Donator:thanks.html.twig', array(
             'recipient' => $recipient,
             'donator' => $donator,
+            'badge1' => $badge1,
+            'badge2' => $badge2,
+            'badge3' => $badge3
         ));
     }
 }
