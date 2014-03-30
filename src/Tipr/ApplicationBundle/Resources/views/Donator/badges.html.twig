@@ -1,0 +1,19 @@
+{% extends "TiprApplicationBundle:Base:layout.html.twig" %}
+
+{% set title = 'Badges' %}
+
+{% block pageContent %}
+    <div role="main" class="ui-content jqm-content jqm-fullwidth">
+        <h2>Badges</h2>
+        <div data-theme="a" data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all tipr-separate badge">
+            {% if badge1 %}
+                <img src="/Tipr/web/images/1donatie-big.png">
+            {% elseif badge2 %}
+                <img src="/Tipr/web/images/5donatie-big.png">
+            {% elseif badge3 %}
+                <img src="/Tipr/web/images/10donatie-big.png">
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+

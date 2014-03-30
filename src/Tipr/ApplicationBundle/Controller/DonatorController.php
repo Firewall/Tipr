@@ -10,6 +10,41 @@ use Tipr\ApplicationBundle\Form\Type\DonatorType;
 
 class DonatorController extends BaseController
 {
+    public function badgesAction(Request $request){
+        if (!$this->check_login($request->getSession())) {
+            return $this->redirect($this->generateUrl('tipr_application_logoutDonatorProcess'));
+        }
+
+        // get recipient
+        $donator = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Donator')
+            ->findOneBy(array('api_id' => $request->getSession()->get('personId')));
+
+        $count = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Donator')
+            ->countDonation($donator);
+
+        $count = $count[1];
+
+        $badge1 = false;
+        $badge2 = false;
+        $badge3 = false;
+
+        if($count >= 1){
+            $badge1 = true;
+        }elseif($count >= 5){
+            $badge2 = true;
+        }elseif($count >= 10){
+            $badge3 = true;
+        }
+
+        return $this->render('TiprApplicationBundle:Donator:badges.html.twig', array(
+            'badge1' => $badge1,
+            'badge2' => $badge2,
+            'badge3' => $badge3
+        ));
+    }
+
     public function settingsAction(Request $request){
         if (!$this->check_login($request->getSession())) {
             return $this->redirect($this->generateUrl('tipr_application_logoutDonatorProcess'));
