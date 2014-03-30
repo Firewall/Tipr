@@ -50,9 +50,14 @@
                             <div class="box list latest-donations">
                                 <h2>Highest donations</h2>
                                 <ul>
-                                    {% for donation in highestDonations %}
-                                        <li>{{ donation.donator.username }}<span>{{ donation.amount | number_format(2, ',') }}</span></li>
-                                    {% endfor %}
+                                    {% if recentDonations|length > 0 %}
+                                        {% for donation in highestDonations %}
+                                            <li>{{ donation.donator.username }}
+                                                <span>&#8364; {{ donation.amount | number_format(2, ',') }}</span></li>
+                                        {% endfor %}
+                                    {% else %}
+                                        <li>No Content</li>
+                                    {% endif %}
                                 </ul>
                             </div>
                         </div>
@@ -63,9 +68,14 @@
                     <div class="box list latest-donations">
                         <h2>Recent donations</h2>
                         <ul>
-                            {% for donation in recentDonations %}
-                                <li>{{ donation.donator.username }}<span>{{ donation.amount | number_format(2, ',') }}</span></li>
-                            {% endfor %}
+                            {% if recentDonations|length > 0 %}
+                                {% for donation in recentDonations %}
+                                    <li>{{ donation.donator.username }}
+                                        <span>&#8364; {{ donation.amount | number_format(2, ',') }}</span></li>
+                                {% endfor %}
+                            {% else %}
+                                <li>No Content</li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>

@@ -11,6 +11,9 @@ class RecipientController extends BaseController
 {
     public function indexAction(Request $request)
     {
+        if(!$this->check_login($request->getSession())){
+            return $this->redirect($this->generateUrl('tipr_application_logoutRecipientProcess'));
+        }
         // get recipient
         $recipient = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Recipient')
@@ -72,6 +75,10 @@ class RecipientController extends BaseController
 
     public function settingsAction(Request $request)
     {
+        if(!$this->check_login($request->getSession())){
+            return $this->redirect($this->generateUrl('tipr_application_logoutRecipientProcess'));
+        }
+
         $recipient = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Recipient')
             ->findOneBy(array('api_id' => $request->getSession()->get('personId')));
@@ -90,6 +97,10 @@ class RecipientController extends BaseController
 
     public function settingsProcessAction(Request $request)
     {
+        if(!$this->check_login($request->getSession())){
+            return $this->redirect($this->generateUrl('tipr_application_logoutRecipientProcess'));
+        }
+        
         $recipient = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Recipient')
             ->findOneBy(array('api_id' => $request->getSession()->get('personId')));
