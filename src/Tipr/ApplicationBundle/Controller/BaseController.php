@@ -33,9 +33,6 @@ class BaseController extends Controller
 
     public function check_login($session)
     {
-        var_dump($session->get('personId'));
-        var_dump($session->get('cookie'));
-       
         if ($session->get('personId') == null || $session->get('cookie') == null) {
            return false;
         } else {

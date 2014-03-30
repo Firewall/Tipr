@@ -36,8 +36,6 @@ class DefaultController extends BaseController
 
         $json = json_decode($response->getBody());
 
-        var_dump($json);
-
         return $this->render('TiprApplicationBundle:Default:index.html.twig', array('name' => 'Tipr'));
     }
 }
