@@ -24,8 +24,7 @@ class DonateType extends AbstractType {
             'constraints' => new \Symfony\Component\Validator\Constraints\NotBlank()
         ));
 
-        $builder->add('send', 'submit' , array(
-            'label' => 'Send'
+        $builder->add('donate', 'submit' , array(
         ));
 
         parent::buildForm($builder,$options);

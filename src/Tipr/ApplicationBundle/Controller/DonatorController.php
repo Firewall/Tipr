@@ -96,6 +96,8 @@ class DonatorController extends BaseController
                 ->findOneBy(array('username' => $data['username'],'code' => $data['code']));
 
             if($donator == null){
+                var_dump('null');
+                throw new \Exception();
                 $error = '';
             }else{
 //                $cookie = $request->getSession()->get('cookie');
@@ -127,15 +129,21 @@ class DonatorController extends BaseController
                 $donation->setAmount($data['amount']);
                 $donation->setRecipient($recipient);
                 $donation->setDonator($donator);
+                $donation->setDate(new \DateTime());
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($donation);
                 $em->flush();
 
                 // make transfer
-                $this->make_transfer($pProduct);
+                //$this->make_transfer($pProduct);
+
+                var_dump($donation);
 
                 //todo: redirect
+                throw new \Exception();
+
+                // todo: redirect to th
             }
         }
 
