@@ -139,4 +139,6 @@ class RecipientRepository extends EntityRepository
 
         return $total;
     }
+
+
 }
