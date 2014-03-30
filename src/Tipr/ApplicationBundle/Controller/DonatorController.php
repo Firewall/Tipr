@@ -15,12 +15,11 @@ class DonatorController extends BaseController
         if (!$this->check_login($request->getSession())) {
             return $this->redirect($this->generateUrl('tipr_application_logoutDonatorProcess'));
         }
-        // todo: find donator id in sessions
-        $id = 1;
 
+        // get recipient
         $donator = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Donator')
-            ->find($id);
+            ->findOneBy(array('api_id' => $request->getSession()->get('personId')));
 
         $donations = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Donator')
