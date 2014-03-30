@@ -14,16 +14,25 @@
                 <img src="http://lorempixel.com/400/300" alt="profile"/>
             </div>
         </div>
-        <div data-theme="a" data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all tipr-separate tipr-header aboutme">
-            <h3>A small thank you</h3>
+        <div data-theme="a" data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all tipr-separate">
+            <p>Thank you for donating, in return I give you my new single on <a href="#">.mp3</a>. Have fun!</p>
         </div>
 
         {% if badge1 %}
-            <img src="#">
+        <div data-theme="a" data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all tipr-separate">
+            <h4>Congrats, you have earned a new badge!</h4>
+            <img src="Tipr/web/images/1donatie-big.png">
+        </div>
         {% elseif badge2 %}
-            <img src="#">
+        <div data-theme="a" data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all tipr-separate">
+            <h4>Congrats, you have earned a new badge!</h4>
+            <img src="Tipr/web/images/5donatie-big.png">
+        </div>
         {% elseif badge3 %}
-            <img src="#">
+        <div data-theme="a" data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all tipr-separate">
+            <h4>Congrats, you have earned a new badge!</h4>
+            <img src="Tipr/web/images/10donatie-big.png">
+        </div>
         {% endif %}
     </div>
 {% endblock %}
