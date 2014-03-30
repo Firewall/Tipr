@@ -12,7 +12,7 @@ class DonatorController extends BaseController
 
     public function indexAction(Request $request)
     {
-        if(!$this->check_login($request->getSession())){
+        if (!$this->check_login($request->getSession())) {
             return $this->redirect($this->generateUrl('tipr_application_logoutDonatorProcess'));
         }
         // todo: find donator id in sessions
@@ -39,7 +39,7 @@ class DonatorController extends BaseController
             ->getTotalThisWeek($donator->getId());
 
 
-        $totalMonth  = $this->getDoctrine()
+        $totalMonth = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Donator')
             ->getTotalThisMonth($donator->getId());
 
@@ -56,7 +56,7 @@ class DonatorController extends BaseController
 
     public function donateAction(Request $request, $username)
     {
-        if(!$this->check_login($request->getSession())){
+        if (!$this->check_login($request->getSession())) {
             return $this->redirect($this->generateUrl('tipr_application_logoutDonatorProcess'));
         }
 
@@ -66,7 +66,7 @@ class DonatorController extends BaseController
             ->getRepository('TiprApplicationBundle:Recipient')
             ->findOneBy(array('username' => $username));
 
-        if(!$recipient){
+        if (!$recipient) {
             throw new NotFoundHttpException();
         }
 
@@ -77,9 +77,9 @@ class DonatorController extends BaseController
         ));
     }
 
-    public function donateProcessAction(Request $request,$username)
+    public function donateProcessAction(Request $request, $username)
     {
-        if(!$this->check_login($request->getSession())){
+        if (!$this->check_login($request->getSession())) {
             return $this->redirect($this->generateUrl('tipr_application_logoutDonatorProcess'));
         }
 
@@ -87,28 +87,26 @@ class DonatorController extends BaseController
             ->getRepository('TiprApplicationBundle:Recipient')
             ->findOneBy(array('username' => $username));
 
-        if(!$recipient){
+        if (!$recipient) {
             throw new NotFoundHttpException();
         }
 
         $form = $this->createForm(new DonateType());
         $form->handleRequest($request);
 
-        if($form->isValid()){
-            var_dump('hey');
-
+        if ($form->isValid()) {
             $data = $form->getData();
 
             // check data again
             $donator = $this->getDoctrine()
                 ->getRepository('TiprApplicationBundle:Donator')
-                ->findOneBy(array('username' => $data['username'],'code' => $data['code']));
+                ->findOneBy(array('username' => $data['username'], 'code' => $data['code']));
 
-            if($donator == null){
+            if ($donator == null) {
                 var_dump('null');
                 throw new \Exception();
                 $error = '';
-            }else{
+            } else {
 //                $cookie = $request->getSession()->get('cookie');
 //
 //                if($cookie){
@@ -117,18 +115,18 @@ class DonatorController extends BaseController
 //                }
 
                 // log in if not logged in
-                $cookie = $this->logIn($donator->getDocumentNumber(),$donator->getBirthDay());
-                $request->getSession()->set('cookie',$cookie);
-                $request->getSession()->set('personId',$donator->getApiId());
+                $cookie = $this->logIn($donator->getDocumentNumber(), $donator->getBirthDay());
+                $request->getSession()->set('cookie', $cookie);
+                $request->getSession()->set('personId', $donator->getApiId());
 
                 //todo: get from donator
                 $iban = 'ES25 1465 0100 92 1708339378';
 
-                $products = $this->api_get('/openapi/rest/products',$cookie);
+                $products = $this->api_get('/openapi/rest/products', $cookie);
 
                 $pProduct = null;
-                foreach($products as $product){
-                    if($product['iban'] = $iban){
+                foreach ($products as $product) {
+                    if ($product['iban'] = $iban) {
                         $pProduct = $product['iban'];
                         break;
                     }
@@ -149,10 +147,7 @@ class DonatorController extends BaseController
 
                 var_dump($donation);
 
-                //todo: redirect
-                throw new \Exception();
-
-                // todo: redirect to th
+                return $this->redirect($this->generateUrl('tipr_application_m_donator_thanks'));
             }
         }
 
@@ -162,4 +157,27 @@ class DonatorController extends BaseController
             'form' => $form->createView()
         ));
     }
-} 
+
+    public function thanksAction(Request $request, $username)
+    {
+        $recipient = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Recipient')
+            ->findOneBy(array('username' => $username));
+
+        $donator = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Donator')
+            ->findOneBy(array('api_id' => $request->getSession()->get('personId')));
+
+        if ($donator == null) {
+            throw new \Exception();
+        }
+
+        $cookie = $this->logIn($donator->getDocumentNumber(), $donator->getBirthDay());
+        $request->getSession()->set('cookie', $cookie);
+
+        return $this->render('TiprApplicationBundle:Donator:thanks.html.twig', array(
+            'recipient' => $recipient,
+            'donator' => $donator,
+        ));
+    }
+}

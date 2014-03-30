@@ -8,54 +8,15 @@
              class="ui-body ui-body-a ui-corner-all tipr-header tipr-separate tipr-image">
             <div class="overlay">
                 <div class="userinfo">
-                    <h2>Steve</h2>
-
-                    <p>Ghent - I play Guitar</p>
+                    <h2>{{ recipient.username }}</h2>
+                    <p>{{ recipient.place }} - {{ recipient.activity }}</p>
                 </div>
                 <img src="http://lorempixel.com/400/300" alt="profile"/>
             </div>
         </div>
-        <div data-theme="a" data-form="ui-body-a"
-             class="ui-body ui-body-a ui-corner-all tipr-separate tipr-header aboutme">
-            <h3>About Steve</h3>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta!</p>
+        <div data-theme="a" data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all tipr-separate tipr-header aboutme">
+            <h3>A small thank you</h3>
         </div>
-        <div data-theme="a" data-form="ui-body-a" class="amount">
-            <form role="form" data-ajax="false" action="{{ path('tipr_application_m_donator_donateProcess',{'username' : username}) }}" {{ form_enctype(form) }} method="post" novalidate="novalidate">
-                {{ form_widget(form.amount, {'attr': {'class': 'textinput-2' }}) }}
-
-                {{ form_widget(form.username, {'attr': {'data-theme' : 'a' , 'placeholder' : 'Gebruikersnaam' }}) }}
-
-                {{ form_widget(form.code, {'attr': {'data-theme' : 'a' , 'placeholder' : 'PIN Code' }}) }}
-
-                {{ form_widget(form.donate, {'attr': {'class' : '', 'label' : 'donate'}}) }}
-
-                {{ form_widget(form._token) }}
-            </form>
-        </div>
-
-        <div class="ui-grid-a ui-corner-all tipr-separate custom-corners">
-            <div class="ui-block-a">
-                <div class="ui-bar ui-bar-a">Today<br/></div>
-                <div class="ui-body ui-body-a">&#8364;43,69</div>
-            </div>
-            <div class="ui-block-b">
-                <div class="ui-bar ui-bar-a">Total<br/></div>
-                <div class="ui-body ui-body-a">&#8364;560,25</div>
-            </div>
-        </div>
-
-        <div data-theme="a" data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all tipr-separate tipr-header">
-            <div id="chart-recipient"></div>
-        </div>
-
-    </div>
-    <!-- /content -->
-    <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="a" id="nav-panel">
-        <ul data-role="listview">
-            <li data-icon="delete"><a href="#" data-rel="close">Close menu</a></li>
-        </ul>
     </div>
 {% endblock %}
 

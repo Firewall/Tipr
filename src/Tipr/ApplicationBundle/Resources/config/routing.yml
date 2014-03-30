@@ -70,6 +70,12 @@ tipr_application_m_donator_donateProcess:
     defaults: { _controller: TiprApplicationBundle:Donator:donateProcess }
     methods: [POST]
 
+tipr_application_m_donator_thanks:
+    pattern:  /m/thanks/{username}
+    defaults: { _controller: TiprApplicationBundle:Donator:thanks }
+    methods: [GET]
+
+
 #recipient
 
 tipr_application_recipient_overview:
