@@ -32,6 +32,8 @@
             {{ form_errors(form.code) }}
         </fieldset>
 
+        {{ error }}
+
         {{ form_widget(form.send,{'attr' : {'class' : 'pure-button pure-input pure-button-primary', 'label' : 'Sign in' }}) }}
         {{ form_widget(form._token) }}
     </form>

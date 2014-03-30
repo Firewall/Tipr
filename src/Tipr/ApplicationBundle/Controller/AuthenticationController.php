@@ -18,7 +18,8 @@ class AuthenticationController extends BaseController
         $form = $this->createForm(new LogInType());
 
         return $this->render('TiprApplicationBundle:Authentication:loginDonator.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'error' => false
         ));
     }
 
@@ -28,23 +29,34 @@ class AuthenticationController extends BaseController
 
         $form->handleRequest($request);
 
+        $error = false;
+
         if ($form->isValid()) {
             $data = $form->getData();
 
-            $donator = $this->getDoctrine()
-                ->getRepository('TiprApplicationBundle:Donator')
-                ->findOneBy(array('username' => $data['username'], 'code' => $data['code']));
+            try {
+                $donator = $this->getDoctrine()
+                    ->getRepository('TiprApplicationBundle:Donator')
+                    ->findOneBy(array('username' => $data['username'], 'code' => $data['code']));
 
-            $cookie = $this->logIn($donator->getDocumentNumber(), $donator->getBirthday());
+                if($donator){
 
-            $request->getSession()->set('personId', $donator->getApiId());
-            $request->getSession()->set('cookie', $cookie);
+                    $cookie = $this->logIn($donator->getDocumentNumber(), $donator->getBirthday());
 
-            return $this->redirect($this->generateUrl('tipr_application_m_donator_overview'));
+                $request->getSession()->set('personId', $donator->getApiId());
+                $request->getSession()->set('cookie', $cookie);
+
+                return $this->redirect($this->generateUrl('tipr_application_m_donator_overview'));
+                }else{
+                    $error = 'Invalid username or pincode';
+                }
+            } catch (\Exception $e) {
+                $error = 'Invalid username or pincode';
+            }
         }
-
         return $this->render('TiprApplicationBundle:Authentication:loginDonator.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'error' => $error
         ));
     }
 
@@ -64,25 +76,35 @@ class AuthenticationController extends BaseController
 
         $form->handleRequest($request);
 
+        $error = false;
 
         if ($form->isValid()) {
             $data = $form->getData();
 
-            $recipient = $this->getDoctrine()
-                ->getRepository('TiprApplicationBundle:Recipient')
-                ->findOneBy(array('username' => $data['username'], 'code' => $data['code']));
+            try {
+                $recipient = $this->getDoctrine()
+                    ->getRepository('TiprApplicationBundle:Recipient')
+                    ->findOneBy(array('username' => $data['username'], 'code' => $data['code']));
 
-            $cookie = $this->logIn($recipient->getDocumentNumber(), $recipient->getBirthday());
+                if($recipient){
+                    $cookie = $this->logIn($recipient->getDocumentNumber(), $recipient->getBirthday());
 
-            $request->getSession()->set('personId', $recipient->getApiId());
-            $request->getSession()->set('cookie', $cookie);
+                    $request->getSession()->set('personId', $recipient->getApiId());
+                    $request->getSession()->set('cookie', $cookie);
 
-            return $this->redirect($this->generateUrl('tipr_application_recipient_overview'));
+                    return $this->redirect($this->generateUrl('tipr_application_recipient_overview'));
+                }else{
+                    $error = 'Invalid username or pincode';
+                }
+            } catch (\Exception $e) {
+                $error = 'Invalid username or pincode';
+            }
         }
 
 
         return $this->render('TiprApplicationBundle:Authentication:loginRecipient.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'error' => $error
         ));
     }
 

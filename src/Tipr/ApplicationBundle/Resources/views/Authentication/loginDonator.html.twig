@@ -24,6 +24,8 @@
                 {{ form_widget(form.code, {'attr': {'placeholder': 'PIN' }}) }}
                 {{ form_errors(form.code) }}
 
+                {{ error }}
+
                 {{ form_widget(form.send) }}
 
                 {{ form_widget(form._token) }}

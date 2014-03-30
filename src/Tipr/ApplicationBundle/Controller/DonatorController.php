@@ -195,11 +195,11 @@ class DonatorController extends BaseController
         $badge2 = false;
         $badge3 = false;
 
-        if(sizeof($donator->getDonations()) == 1){
+        if(sizeof($donator->getDonnations()) == 1){
             $badge1 = true;
-        }elseif(sizeof($donator->getDonations()) == 5){
+        }elseif(sizeof($donator->getDonnations()) == 5){
             $badge2 = true;
-        }elseif(sizeof($donator->getDonations()) == 10){
+        }elseif(sizeof($donator->getDonnations()) == 10){
             $badge3 = true;
         }
 
