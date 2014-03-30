@@ -67,7 +67,8 @@ class DonatorController extends BaseController
             ->findOneBy(array('username' => $username));
 
         if (!$recipient) {
-            throw new NotFoundHttpException();
+
+            return $this->render('TiprApplicationBundle:Donator:error.html.twig', array());
         }
 
         $totalToday = $this->getDoctrine()
@@ -166,7 +167,7 @@ class DonatorController extends BaseController
                 // make transfer
                 //$this->make_transfer($pProduct);
 
-                return $this->redirect($this->generateUrl('tipr_application_m_donator_thanks',array('username' => $username)));
+                return $this->redirect($this->generateUrl('tipr_application_m_donator_thanks', array('username' => $username)));
             }
         }
 
