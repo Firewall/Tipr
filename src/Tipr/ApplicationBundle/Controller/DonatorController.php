@@ -79,15 +79,14 @@ class DonatorController extends BaseController
             ->getRepository('TiprApplicationBundle:Recipient')
             ->getTotalThisMonth($recipient);
 
-        $last7Days['Mar 21'] = 34.00;
-        $last7Days['Mar 22'] = 44.00;
-        $last7Days['Mar 23'] = 58.00;
-        $last7Days['Mar 24'] = 62.00;
-        $last7Days['Mar 25'] = 75.00;
-        $last7Days['Mar 26'] = 83.00;
-        $last7Days['Mar 27'] = 95.00;
         $last7Days['Mar 28'] = 115.00;
-
+        $last7Days['Mar 27'] = 95.00;
+        $last7Days['Mar 26'] = 83.00;
+        $last7Days['Mar 25'] = 75.00;
+        $last7Days['Mar 24'] = 62.00;
+        $last7Days['Mar 23'] = 58.00;
+        $last7Days['Mar 22'] = 44.00;
+        $last7Days['Mar 21'] = 34.00;
 
         return $this->render('TiprApplicationBundle:Donator:donate.html.twig', array(
             'recipient' => $recipient,
