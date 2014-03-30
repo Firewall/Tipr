@@ -40,17 +40,37 @@
             <div class="ui-grid-a ui-corner-all tipr-separate custom-corners">
                 <div class="ui-block-a">
                     <div class="ui-bar ui-bar-a">Today<br/></div>
-                    <div class="ui-body ui-body-a">&#8364;43,69</div>
+                    <div class="ui-body ui-body-a">&#8364;{{ totalToday }}</div>
                 </div>
                 <div class="ui-block-b">
                     <div class="ui-bar ui-bar-a">Total<br/></div>
-                    <div class="ui-body ui-body-a">&#8364;560,25</div>
+                    <div class="ui-body ui-body-a">&#8364;{{ totalDonated }}</div>
                 </div>
+            </div>
+
+            <ul id="chart-data">
+                {% for day,amount in last7Days %}
+                    <li data-day="{{ day }}" data-amount="{{ amount }}"></li>
+                {% endfor %}
+            </ul>
+
+            <div data-theme="a" data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all tipr-separate tipr-header">
+                <div id="chart-recipient"></div>
             </div>
         {% endif %}
 
-        <div data-theme="a" data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all tipr-separate tipr-header">
-            <div id="chart-recipient"></div>
+        <div style="text-align: center;">
+            <!-- AddThis Button BEGIN -->
+            <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+                <a class="addthis_button_preferred_1"></a>
+                <a class="addthis_button_preferred_2"></a>
+                <a class="addthis_button_preferred_3"></a>
+                <a class="addthis_button_preferred_4"></a>
+                <a class="addthis_button_compact"></a>
+                <a class="addthis_counter addthis_bubble_style"></a>
+            </div>
+            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-533799ac24f9a2b1"></script>
+            <!-- AddThis Button END -->
         </div>
 
     </div>

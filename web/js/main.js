@@ -51,12 +51,16 @@ function drawChart() {
     if ((chartRecipient = document.getElementById('chart-recipient')) !== null) {
         new google.visualization.LineChart(chartRecipient).
             draw(data, {
-                width: $('#chart-recipient').width(),
+                width: $('#chart_div').width(),
                 height: 200,
                 colors: ['#ff6600'],
-                //legend: { position: 'none' },
+                legend: { position: 'none' },
                 chartArea: {
                     width: '80%'
+                },
+                vAxis: {
+                    viewWindowMode: 'explicit',
+                    viewWindow:{ min: 0 }
                 }
             });
     }
