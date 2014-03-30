@@ -75,6 +75,20 @@ tipr_application_m_donator_thanks:
     defaults: { _controller: TiprApplicationBundle:Donator:thanks }
     methods: [GET]
 
+tipr_application_m_donator_settings:
+    pattern: /m/settings
+    defaults: { _controller: TiprApplicationBundle:Donator:settings }
+    methods: [GET]
+
+tipr_application_m_donator_settingsProcess:
+    pattern: /m/settings
+    defaults: { _controller: TiprApplicationBundle:Donator:settingsProcess }
+    methods: [POST]
+
+tipr_application_m_donator_badges:
+    pattern:  /m/badges
+    defaults: { _controller: TiprApplicationBundle:Donator:badges }
+    methods: [GET]
 
 #recipient
 

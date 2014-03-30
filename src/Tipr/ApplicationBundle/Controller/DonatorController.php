@@ -6,9 +6,57 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Tipr\ApplicationBundle\Form\Type\DonateType;
 use Symfony\Component\HttpFoundation\Request;
 use Tipr\ApplicationBundle\Entity\Donation;
+use Tipr\ApplicationBundle\Form\Type\DonatorType;
 
 class DonatorController extends BaseController
 {
+    public function settingsAction(Request $request){
+        if (!$this->check_login($request->getSession())) {
+            return $this->redirect($this->generateUrl('tipr_application_logoutDonatorProcess'));
+        }
+
+        // get recipient
+        $donator = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Donator')
+            ->findOneBy(array('api_id' => $request->getSession()->get('personId')));
+
+        $form = $this->createForm(new DonatorType(),$donator);
+
+        return $this->render('TiprApplicationBundle:Donator:settings.html.twig', array(
+            'donator' => $donator,
+            'form' => $form->createView()
+        ));
+    }
+
+    public function settingsProcessAction(Request $request){
+        if (!$this->check_login($request->getSession())) {
+            return $this->redirect($this->generateUrl('tipr_application_logoutDonatorProcess'));
+        }
+
+        // get recipient
+        $donator = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Donator')
+            ->findOneBy(array('api_id' => $request->getSession()->get('personId')));
+
+        $form = $this->createForm(new DonatorType(),$donator);
+
+        $form->handleRequest($request);
+
+        if($form->isValid()){
+            $data = $form->getData();
+
+            $donator->setEmailaddress($data->getEmailaddress());
+            $donator->setUsername($data->getUsername());
+
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->flush();
+        }
+
+        return $this->render('TiprApplicationBundle:Donator:settings.html.twig', array(
+            'donator' => $donator,
+            'form' => $form->createView()
+        ));
+    }
 
     public function indexAction(Request $request)
     {
