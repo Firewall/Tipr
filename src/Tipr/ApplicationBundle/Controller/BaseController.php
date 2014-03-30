@@ -33,6 +33,7 @@ class BaseController extends Controller
 
     public function check_login($session)
     {
+
         if ($session->get('personId') == null || $session->get('cookie') == null) {
            return false;
         } else {

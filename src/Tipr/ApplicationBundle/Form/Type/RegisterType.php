@@ -24,7 +24,7 @@ class RegisterType extends AbstractType {
             'constraints' => new \Symfony\Component\Validator\Constraints\NotBlank()
         ));
 
-        $builder->add('code', 'number',array(
+        $builder->add('code', 'password',array(
             'constraints' => new \Symfony\Component\Validator\Constraints\NotBlank()
         ));
 

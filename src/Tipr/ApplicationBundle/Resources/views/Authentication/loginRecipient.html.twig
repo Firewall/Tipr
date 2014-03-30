@@ -37,6 +37,7 @@
         {{ form_widget(form.send,{'attr' : {'class' : 'pure-button pure-input pure-button-primary', 'label' : 'Sign in' }}) }}
         {{ form_widget(form._token) }}
     </form>
+    <a href="{{ path('tipr_application_registerRecipient') }}">No account? Register one now!</a>
 </div>
 </body>
 </html>
