@@ -43,7 +43,7 @@ class RecipientController extends BaseController
             ->getRepository('TiprApplicationBundle:Recipient')
             ->getTotalThisMonth($recipient->getId());
 
-        $url = "http://tipr.be/m/donate/" . $recipient->getUsername();
+        $url = "http://dev.tipr.be/m/donate/" . $recipient->getUsername();
 //        $logo_file = "/home/matthew/code/Tipr/src/Tipr/ApplicationBundle/Controller/overlay.png";
         $qrUrl = "http://chart.apis.google.com/chart?cht=qr&chs=500x500&chld=L|0&chl=$url";
 //        $targetfile = 'qrs/' . $recipient->getUsername() . ".png";
