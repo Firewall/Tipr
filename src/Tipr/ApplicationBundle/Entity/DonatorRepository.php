@@ -12,6 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class DonatorRepository extends EntityRepository
 {
+    public function countDonation($donator)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        return $qb->select('count(d)')
+            ->from('Tipr\ApplicationBundle\Entity\Donation', 'd')
+            ->where('d.donator = :donator')
+            ->setParameter('donator', $donator)
+            ->getQuery()
+            ->getSingleResult();
+    }
+
     public function getDonationsLimit($donator, $limit)
     {
         $qb = $this->_em->createQueryBuilder();

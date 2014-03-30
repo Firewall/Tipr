@@ -191,15 +191,21 @@ class DonatorController extends BaseController
             throw new \Exception();
         }
 
+        $count = $this->getDoctrine()
+            ->getRepository('TiprApplicationBundle:Donator')
+            ->countDonation($donator);
+
+        $count = $count[1];
+
         $badge1 = false;
         $badge2 = false;
         $badge3 = false;
 
-        if(sizeof($donator->getDonnations()) == 1){
+        if($count == 1){
             $badge1 = true;
-        }elseif(sizeof($donator->getDonnations()) == 5){
+        }elseif($count == 5){
             $badge2 = true;
-        }elseif(sizeof($donator->getDonnations()) == 10){
+        }elseif($count == 10){
             $badge3 = true;
         }
 
