@@ -1,0 +1,22 @@
+{% extends "TiprApplicationBundle:Base:layout.html.twig" %}
+
+{% set title = 'Donate' %}
+
+{% block pageContent %}
+    <div role="main" class="ui-content jqm-content jqm-fullwidth">
+        <h2>Edit your settings</h2>
+        <div data-theme="a" data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all tipr-separate">
+            <form role="form" data-ajax="false" action="{{ path('tipr_application_m_donator_settingsProcess') }}" {{ form_enctype(form) }} method="post" novalidate="novalidate">
+
+                {{ form_widget(form.username, {'attr': {'placeholder' : 'Username' }}) }}
+
+                {{ form_widget(form.emailaddress, {'attr': {'placeholder' : 'E-mail' }}) }}
+
+                {{ form_widget(form.save, {'attr': {'label' : 'Edit settings', 'class' : 'ui-shadow ui-btn ui-corner-all ui-mini' }}) }}
+
+                {{ form_widget(form._token) }}
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
