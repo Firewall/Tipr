@@ -211,10 +211,10 @@ class AuthenticationController extends BaseController
         ));
     }
 
-
-    public function logout(Request $request)
+    public function logoutRecipientProcessAction(Request $request)
     {
         $request->getSession()->remove('cookie');
         $request->getSession()->remove('personId');
+        return $this->redirect($this->generateUrl('tipr_application_loginRecipientProcess'));
     }
 } 

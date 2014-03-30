@@ -30,7 +30,7 @@
         <ul>
             <li class="{% block overview %}{% endblock %}"><a href="{{ path('tipr_application_recipient_overview') }}"><i class="fa fa-signal"></i></a></li>
             <li class="{% block settings %}{% endblock %}"><a href="{{ path('tipr_application_recipient_settings') }}"><i class="fa fa-cogs"></i></a></li>
-            <li><a href="login.html"><i class="fa fa-power-off"></i></a></li>
+            <li><a href="{{ path('tipr_application_logoutRecipientProcess') }}"><i class="fa fa-power-off"></i></a></li>
         </ul>
     </aside>
     {% block pageContent %}
