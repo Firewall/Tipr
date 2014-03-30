@@ -24,7 +24,7 @@
         <div data-theme="a" data-form="ui-body-a" class="amount">
             <form role="form" data-ajax="false" action="{{ path('tipr_application_m_donator_donateProcess',{'username' : username}) }}" {{ form_enctype(form) }} method="post" novalidate="novalidate">
 
-                {{ form_widget(form.amount, {'attr': {'type': 'number' , 'class': 'textinput-2' , 'placeholder' : 'Amount','value' : recipient.standardamount }}) }}
+                {{ form_widget(form.amount, {'attr': {'class': 'textinput-2' , 'placeholder' : 'Amount','value' : recipient.standardamount }}) }}
 
                 {{ form_widget(form.username, {'attr': {'data-theme' : 'a' , 'placeholder' : 'Gebruikersnaam' }}) }}
 
