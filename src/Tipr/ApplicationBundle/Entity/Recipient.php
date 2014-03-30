@@ -71,6 +71,69 @@ class Recipient
     private $code;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="activity", type="string", length=255,nullable=true)
+     */
+    private $activity;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="facebook", type="string", length=255,nullable=true)
+     */
+    private $facebook;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="twitter", type="string", length=255,nullable=true)
+     */
+    private $twitter;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="youtube", type="string", length=255,nullable=true)
+     */
+    private $youtube;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="place", type="string", length=255,nullable=true)
+     */
+    private $place;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="about", type="text", length=255,nullable=true)
+     */
+    private $about;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="goal", type="integer", length=255,nullable=true)
+     */
+    private $goal;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="standardamount", type="integer", length=255,nullable=true)
+     */
+    private $standardamount;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="boolean", type="integer", length=255,nullable=true)
+     */
+    private $showstats;
+
+    /**
      * @param int $api_id
      */
     public function setApiId($api_id)
@@ -143,6 +206,8 @@ class Recipient
     {
         return $this->name;
     }
+
+
 
     /**
      * @var string
@@ -237,4 +302,153 @@ class Recipient
     {
         return $this->username;
     }
+
+    /**
+     * @param string $about
+     */
+    public function setAbout($about)
+    {
+        $this->about = $about;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAbout()
+    {
+        return $this->about;
+    }
+
+    /**
+     * @param string $facebook
+     */
+    public function setFacebook($facebook)
+    {
+        $this->facebook = $facebook;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFacebook()
+    {
+        return $this->facebook;
+    }
+
+    /**
+     * @param string $showstats
+     */
+    public function setShowstats($showstats)
+    {
+        $this->showstats = $showstats;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShowstats()
+    {
+        if($this->showstats == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * @param string $standardamount
+     */
+    public function setStandardamount($standardamount)
+    {
+        $this->standardamount = $standardamount;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStandardamount()
+    {
+        return $this->standardamount;
+    }
+
+    /**
+     * @param string $twitter
+     */
+    public function setTwitter($twitter)
+    {
+        $this->twitter = $twitter;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTwitter()
+    {
+        return $this->twitter;
+    }
+
+    /**
+     * @param string $youtube
+     */
+    public function setYoutube($youtube)
+    {
+        $this->youtube = $youtube;
+    }
+
+    /**
+     * @return string
+     */
+    public function getYoutube()
+    {
+        return $this->youtube;
+    }
+
+    /**
+     * @param string $goal
+     */
+    public function setGoal($goal)
+    {
+        $this->goal = $goal;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGoal()
+    {
+        return $this->goal;
+    }
+
+    /**
+     * @param string $place
+     */
+    public function setPlace($place)
+    {
+        $this->place = $place;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlace()
+    {
+        return $this->place;
+    }
+
+    /**
+     * @param string $activity
+     */
+    public function setActivity($activity)
+    {
+        $this->activity = $activity;
+    }
+
+    /**
+     * @return string
+     */
+    public function getActivity()
+    {
+        return $this->activity;
+    }
+
 }

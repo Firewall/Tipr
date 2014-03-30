@@ -33,11 +33,12 @@ class BaseController extends Controller
 
     public function check_login($session)
     {
-        if (!$session->get('cookie')) {
-            //redirect to login
-            return false;
+        if ($session->get('personId') == null) {
+           return false;
+        } else {
+            return true;
         }
-        return true;
+
     }
 
     public function make_transfer($product)
@@ -48,7 +49,7 @@ class BaseController extends Controller
         $body = array();
 
         $client->setDefaultOption('headers', array('Content-Length' => '0'));
-        $response = $client->put($url, array(),'
+        $response = $client->put($url, array(), '
         "from": {
             "productNumber": "ES84 1465 0100 96 2025957054”
         },
@@ -79,9 +80,9 @@ class BaseController extends Controller
         $client = new Client();
 
         $response = $client->post($this->api_base_url . '/openapi/login/auth/response' . $this->api_key, [
-                'headers' => ['Content-Type' => 'application/x-www-form-urlencoded'],
-                'body' => ['ticket' => $ticket]
-            ]);
+            'headers' => ['Content-Type' => 'application/x-www-form-urlencoded'],
+            'body' => ['ticket' => $ticket]
+        ]);
 
         // get cookie
         return $response->getHeader('set-cookie');
