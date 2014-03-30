@@ -1041,6 +1041,19 @@ striping:
     display: block;
     margin: 0 auto;
 }
+.wrapper main .stats .qrcode .overlay {
+    font-family: "Nunito", sans-serif;
+    position: absolute;
+    width: 200px;
+    height: 150px;
+    padding-top: 50px;
+    background: rgba(000,000,000,0.6);
+    margin-top: 0px;
+    margin-left: 35px;
+    text-align: center;
+    font-size: 26px;
+    color: #fff!important;
+}
 
 .signin .wrapper, .signup .wrapper {
     background: none;
@@ -1105,7 +1118,7 @@ striping:
     z-index: 20;
     position: absolute;
     text-align: center;
-    margin-left: 13px;
+    margin-left: 6px;
     margin-top: 60px;
     color: #fff;
     text-shadow: none;
@@ -1209,8 +1222,8 @@ a {
 }
 
 .wrapper aside .logo {
-    font-size: 24px;
-    line-height: 24px;
+    font-size: 20px;
+    line-height: 20px;
     text-align: center;
     margin-top: 40px;
 }

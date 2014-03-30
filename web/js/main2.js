@@ -11,8 +11,6 @@ function drawChart() {
         });
 
         if (!arr.length < 14) {
-
-
             var date = moment(new Date()).subtract('days', arr.length);
             for (var i = arr.length; i < 14; i++) {
                 date.subtract('days', 1);
@@ -34,16 +32,18 @@ function drawChart() {
         new google.visualization.ColumnChart(chartRecipient).
             draw(data, {
                 width: $('#chart_div').width(),
-                height: 200,
+                height: 230,
                 colors: ['#ff6600'],
                 legend: { position: 'none' },
                 chartArea: {
-                    width: '80%'
+                    width: '95%',
+                    top: '30'
                 },
                 vAxis: {
                     viewWindowMode: 'explicit',
-                    viewWindow:{ min: 0 }
-                }
+                    viewWindow:{ min: 0 },
+                    
+                },
             });
     }
 }
