@@ -61,10 +61,8 @@ class RecipientType extends AbstractType {
         ));
 
         $builder->add('save', 'submit' , array(
-            'label' => 'Send'
+            'label' => 'Edit settings',
         ));
-
-        parent::buildForm($builder,$options);
     }
 
     /**
