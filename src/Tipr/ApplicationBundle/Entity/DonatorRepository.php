@@ -42,10 +42,10 @@ class DonatorRepository extends EntityRepository
 
         $totals = array();
         foreach ($donations as $donation) {
-            if (isset($totals[date_format($donation->getDate(), 'Y/m/d')])) {
-                $totals[date_format($donation->getDate(), 'Y/m/d')] += $donation->getAmount();
+            if (isset($totals[date_format($donation->getDate(), 'd')])) {
+                $totals[date_format($donation->getDate(), 'd')] += $donation->getAmount();
             } else {
-                $totals[date_format($donation->getDate(), 'Y/m/d')] = $donation->getAmount();
+                $totals[date_format($donation->getDate(), 'd')] = $donation->getAmount();
             }
         }
         return $totals;
