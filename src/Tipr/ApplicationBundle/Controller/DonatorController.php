@@ -166,9 +166,7 @@ class DonatorController extends BaseController
                 // make transfer
                 //$this->make_transfer($pProduct);
 
-                var_dump($donation);
-
-                return $this->redirect($this->generateUrl('tipr_application_m_donator_thanks'));
+                return $this->redirect($this->generateUrl('tipr_application_m_donator_thanks',array('username' => $username)));
             }
         }
 
