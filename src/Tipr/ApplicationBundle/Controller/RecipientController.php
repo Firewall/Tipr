@@ -37,6 +37,25 @@ class RecipientController extends BaseController
             ->getRepository('TiprApplicationBundle:Recipient')
             ->getTotalThisMonth($recipient->getId());
 
+        $url = "http://tipr.be/m/donate/steve";
+        $logo_file = "/home/matthew/code/Tipr/src/Tipr/ApplicationBundle/Controller/overlay.png";
+        $image_file = "http://chart.apis.google.com/chart?cht=qr&chs=500x500&chld=L|0&chl=$url";
+        $targetfile = 'qrs/' . $recipient->getUsername() . ".png";
+        $photo = imagecreatefrompng($image_file);
+        $fotoW = imagesx($photo);
+        $fotoH = imagesy($photo);
+        $logoImage = imagecreatefrompng($logo_file);
+        $logoW = imagesx($logoImage);
+        $logoH = imagesy($logoImage);
+        $photoFrame = imagecreatetruecolor($fotoW, $fotoH);
+        $dest_x = $fotoW - $logoW;
+        $dest_y = $fotoH - $logoH;
+        imagecopyresampled($photoFrame, $photo, 0, 0, 0, 0, $fotoW, $fotoH, $fotoW, $fotoH);
+        imagecopy($photoFrame, $logoImage, $dest_x, $dest_y, 0, 0, $logoW, $logoH);
+        imagepng($photoFrame, $targetfile);
+        $qrUrl = $targetfile;
+//        echo '<img src="' . $targetfile . '" />';
+
         return $this->render('TiprApplicationBundle:Recipient:index.html.twig', array(
             'recipient' => $recipient,
             'recentDonations' => $recentDonations,
@@ -44,7 +63,8 @@ class RecipientController extends BaseController
             'highestDonations' => $highestDonations,
             'totalToday' => $donationsThisDay,
             'totalWeek' => $donationsThisWeek,
-            'totalMonth' => $donationsThisMonth
+            'totalMonth' => $donationsThisMonth,
+            'qrUrl' => $qrUrl
         ));
     }
 
@@ -54,7 +74,7 @@ class RecipientController extends BaseController
             ->getRepository('TiprApplicationBundle:Recipient')
             ->findOneBy(array('apiId' => $request->getSession()->get('personId')));
 
-        if(!$recipient){
+        if (!$recipient) {
 
         }
 
