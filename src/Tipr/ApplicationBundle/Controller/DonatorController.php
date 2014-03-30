@@ -10,7 +10,8 @@ use Tipr\ApplicationBundle\Form\Type\DonatorType;
 
 class DonatorController extends BaseController
 {
-    public function badgesAction(Request $request){
+    public function badgesAction(Request $request)
+    {
         if (!$this->check_login($request->getSession())) {
             return $this->redirect($this->generateUrl('tipr_application_logoutDonatorProcess'));
         }
@@ -30,11 +31,11 @@ class DonatorController extends BaseController
         $badge2 = false;
         $badge3 = false;
 
-        if($count >= 1){
+        if ($count >= 1) {
             $badge1 = true;
-        }elseif($count >= 5){
+        } elseif ($count >= 5) {
             $badge2 = true;
-        }elseif($count >= 10){
+        } elseif ($count >= 10) {
             $badge3 = true;
         }
 
@@ -45,7 +46,8 @@ class DonatorController extends BaseController
         ));
     }
 
-    public function settingsAction(Request $request){
+    public function settingsAction(Request $request)
+    {
         if (!$this->check_login($request->getSession())) {
             return $this->redirect($this->generateUrl('tipr_application_logoutDonatorProcess'));
         }
@@ -55,7 +57,7 @@ class DonatorController extends BaseController
             ->getRepository('TiprApplicationBundle:Donator')
             ->findOneBy(array('api_id' => $request->getSession()->get('personId')));
 
-        $form = $this->createForm(new DonatorType(),$donator);
+        $form = $this->createForm(new DonatorType(), $donator);
 
         return $this->render('TiprApplicationBundle:Donator:settings.html.twig', array(
             'donator' => $donator,
@@ -63,7 +65,8 @@ class DonatorController extends BaseController
         ));
     }
 
-    public function settingsProcessAction(Request $request){
+    public function settingsProcessAction(Request $request)
+    {
         if (!$this->check_login($request->getSession())) {
             return $this->redirect($this->generateUrl('tipr_application_logoutDonatorProcess'));
         }
@@ -73,11 +76,11 @@ class DonatorController extends BaseController
             ->getRepository('TiprApplicationBundle:Donator')
             ->findOneBy(array('api_id' => $request->getSession()->get('personId')));
 
-        $form = $this->createForm(new DonatorType(),$donator);
+        $form = $this->createForm(new DonatorType(), $donator);
 
         $form->handleRequest($request);
 
-        if($form->isValid()){
+        if ($form->isValid()) {
             $data = $form->getData();
 
             $donator->setEmailaddress($data->getEmailaddress());
