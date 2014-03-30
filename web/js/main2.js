@@ -70,5 +70,5 @@ $account_about.on('input', function() {
 
 var $account_goal = $('#account_goal');
 $account_goal.on('input', function() {
-    $('#goaluser span').html($account_goal.val());
+    $('#usergoal').html($account_goal.val());
 });
