@@ -7,20 +7,23 @@ function drawChart() {
 
         $('#chart-data li').each(function(index, elem) {
             var $elem = $(elem);
-            arr.push([new Date($elem.data('day')), $elem.data('amount'), $elem.data('amount')]);
+            arr.push([$elem.data('day'), $elem.data('amount'), $elem.data('amount')]);
         });
 
         if (!arr.length < 14) {
-            var date = new Date(arr[arr.length - 1][0]);
+
+
+            var date = moment(new Date()).subtract('days', arr.length);
             for (var i = arr.length; i < 14; i++) {
-                date.setDate(date.getDate() - 1);
-                arr.push([date, 0, 0]);
+                date.subtract('days', 1);
+                arr.push([date.format('MMM DD'), 0, 0]);
             }
         }
 
         arr.push(['Day', 'Donated', { role: 'annotation' }]);
 
         arr = arr.reverse();
+        debugger;
 
         return google.visualization.arrayToDataTable(arr);
     }
@@ -37,9 +40,6 @@ function drawChart() {
                 legend: { position: 'none' },
                 chartArea: {
                     width: '80%'
-                },
-                hAxis: {
-                    format: 'd'
                 }
             });
     }
