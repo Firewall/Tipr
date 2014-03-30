@@ -65,3 +65,13 @@ tipr_application_m_donator_donateProcess:
 tipr_application_recipient_overview:
     pattern:  /overview
     defaults: { _controller: TiprApplicationBundle:Recipient:index }
+
+tipr_application_recipient_settings:
+    pattern:  /settings
+    defaults: { _controller: TiprApplicationBundle:Recipient:settings }
+    methods: [GET]
+
+tipr_application_recipient_settingsProcess:
+    pattern:  /settings
+    defaults: { _controller: TiprApplicationBundle:Recipient:settingsProcess }
+    methods: [POST]

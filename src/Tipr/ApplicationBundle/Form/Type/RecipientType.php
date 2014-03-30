@@ -42,10 +42,6 @@ class RecipientType extends AbstractType {
         $builder->add('goal', 'number',array(
         ));
 
-        $builder->add('code', 'password',array(
-            'constraints' => new \Symfony\Component\Validator\Constraints\NotBlank()
-        ));
-
         $builder->add('send', 'submit' , array(
             'label' => 'Send'
         ));
@@ -62,6 +58,10 @@ class RecipientType extends AbstractType {
         $builder->add('showstats', 'checkbox', array(
             'label'     => 'Show this entry publicly?',
             'required'  => false,
+        ));
+
+        $builder->add('save', 'submit' , array(
+            'label' => 'Send'
         ));
 
         parent::buildForm($builder,$options);

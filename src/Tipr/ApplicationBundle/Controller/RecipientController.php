@@ -3,6 +3,9 @@
 namespace Tipr\ApplicationBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Tipr\ApplicationBundle\Form\Type\RecipientType;
 
 class RecipientController extends BaseController
 {
@@ -71,14 +74,17 @@ class RecipientController extends BaseController
     {
         $recipient = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Recipient')
-            ->findOneBy(array('apiId' => $request->getSession()->get('personId')));
+            ->findOneBy(array('api_id' => $request->getSession()->get('personId')));
 
-        if (!$recipient) {
-
+        if(!$recipient){
+            throw new NotFoundHttpException();
         }
+
+        $form = $this->createForm(new RecipientType(),$recipient);
 
         return $this->render('TiprApplicationBundle:Recipient:settings.html.twig', array(
             'recipient' => $recipient,
+            'form' => $form->createView()
         ));
     }
 
@@ -86,10 +92,36 @@ class RecipientController extends BaseController
     {
         $recipient = $this->getDoctrine()
             ->getRepository('TiprApplicationBundle:Recipient')
-            ->findOneBy(array('apiId' => $request->getSession()->get('personId')));
+            ->findOneBy(array('api_id' => $request->getSession()->get('personId')));
+
+        if(!$recipient){
+            throw new NotFoundHttpException();
+        }
+
+        $form = $this->createForm(new RecipientType(),$recipient);
+        $form->handleRequest($request);
+
+        if($form->isValid()){
+            $data = $form->getData();
+
+            $recipient->setUsername($data->getUsername());
+            $recipient->setEmailaddress($data->getEmailaddress());
+            $recipient->setPlace($data->getPlace());
+            $recipient->setActivity($data->getActivity());
+            $recipient->setAbout($data->getAbout());
+            $recipient->setStandardamount($data->getStandardAmount());
+            $recipient->setGoal($data->getGoal());
+            $recipient->setFacebook($data->getFacebook());
+            $recipient->setTwitter($data->getTwitter());
+            $recipient->setYoutube($data->getYoutube());
+
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+        }
 
         return $this->render('TiprApplicationBundle:Recipient:settings.html.twig', array(
             'recipient' => $recipient,
+            'form' => $form->createView()
         ));
     }
 } 

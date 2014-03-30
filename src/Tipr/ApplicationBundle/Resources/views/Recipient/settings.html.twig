@@ -1,66 +1,110 @@
 {% extends "TiprApplicationBundle:Base:websiteLayout.html.twig" %}
 
+{% block settings %}active{% endblock %}
+
 {% set title = 'Overview' %}
 {% block pageContent %}
-    <main>
-        <div class="quickstats">
-            <div class="pure-g">
-                <div class="pure-u-1-3">
-                    <div class="box">
-                        <p><span>&#8364; {{ totalToday | number_format(2, ',') }}</span> today</p>
-                    </div>
-                </div>
+    <main class="settings">
+        <div class="pure-g">
+            <div class="pure-u-1-2">
+                <div class="phone">
+                    <div class="phonewrapper">
+                        <div class="overlay">
+                            <div class="userinfo">
+                                <h2>Steve</h2>
 
-                <div class="pure-u-1-3">
-                    <div class="box">
-                        <p><span>&#8364; {{ totalWeek | number_format(2, ',') }}</span> this week</p>
-                    </div>
-                </div>
+                                <p>Ghent - I play Guitar</p>
+                            </div>
+                            <img src="http://lorempixel.com/250/150" alt="profile"/>
+                        </div>
+                        <div class="aboutuser">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        </div>
+                        <div class="pure-g social">
+                            <div class="pure-u-1-3">
+                                <a href="#"><i class="fa fa-facebook"></i> Facebook</a>
+                            </div>
 
-                <div class="pure-u-1-3">
-                    <div class="box">
-                        <p><span>&#8364; {{ totalMonth | number_format(2, ',') }}</span> this month</p>
+                            <div class="pure-u-1-3">
+                                <a href="#"><i class="fa fa-twitter"></i> Twitter</a>
+                            </div>
+
+                            <div class="pure-u-1-3">
+                                <a href="#"><i class="fa fa-youtube-play"></i> Youtube</a>
+                            </div>
+                        </div>
+                        <div class="stats">
+
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="stats">
-            <div class="pure-g">
-                <div class="pure-u-2-3">
-                    <div class="box">
-                        <div id="chart_div" class="bigchart"></div>
-                    </div>
-                    <div class="pure-g">
-                        <div class="pure-u-1-2">
-                            <div class="box qrcode">
-                                <h2>Your QR-code</h2>
-                                <img src="/images/qrcode.png" width="200px" height="200px">
-                            </div>
-                        </div>
-                        <div class="pure-u-1-2">
-                            <div class="box list latest-donations">
-                                <h2>Highest donations</h2>
-                                <ul>
-                                    {% for donation in highestDonations %}
-                                        <li>{{ donation.donator.name }} {{ donation.donator.surname }}<span>{{ donation.amount | number_format(2, ',') }}</span></li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="pure-u-1-2 edit">
+                <h2>Edit your settings</h2>
 
-                <div class="pure-u-1-3">
-                    <div class="box list latest-donations">
-                        <h2>Latest donations</h2>
-                        <ul>
-                            {% for donation in recentDonations %}
-                                <li>{{ donation.donator.name }} {{ donation.donator.surname }}<span>{{ donation.amount | number_format(2, ',') }}</span></li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
+                <form class="pure-form" role="form" data-ajax="false" action="{{ path('tipr_application_recipient_settingsProcess') }}" {{ form_enctype(form) }} method="post"
+                      novalidate="novalidate">
+
+                    <fieldset class="pure-group">
+                        {{ form_widget(form.username, {'attr': {'class': 'pure-input-1','placeholder' : 'username' }}) }}
+                        {{ form_errors(form.username) }}
+
+                        {{ form_widget(form.emailaddress, {'attr': {'class': 'pure-input-1' , 'placeholder' : 'E-mail' }}) }}
+                        {{ form_errors(form.emailaddress) }}
+
+                        {{ form_widget(form.place, {'attr': {'class': 'pure-input-1', 'placeholder' : 'Place' }}) }}
+                        {{ form_errors(form.place) }}
+                    </fieldset>
+
+                    {{ form_widget(form.activity, {'attr': {'class': 'activity pure-input-1' }}) }}
+                    {{ form_errors(form.activity) }}
+
+                    <fieldset>
+                        {{ form_widget(form.about, {'attr': {'class': 'pure-input-1', 'placeholder' : 'About myself' }}) }}
+                        {{ form_errors(form.about) }}
+                    </fieldset>
+
+                    <fieldset class="pure-group">
+                        <span class="icon"><i class="fa fa-eur"></i></span>
+                        {{ form_widget(form.standardamount, {'attr': {'class': 'pure-input-1', 'placeholder' : 'Standard amount' }}) }}
+                        <span class="icon"><i class="fa fa-eur"></i></span>
+                        {{ form_widget(form.goal, {'attr': {'class': 'pure-input-1', 'placeholder' : 'Goal' }}) }}
+                    </fieldset>
+
+                    <fieldset class="pure-group">
+                        <span class="icon"><i class="fa fa-facebook"></i></span>
+                        {{ form_widget(form.facebook, {'attr': {'class': 'pure-input-1','placeholder' : 'Facebook url' }}) }}
+                        {{ form_errors(form.facebook) }}
+
+                        <span class="icon"><i class="fa fa-twitter"></i></span>
+                        {{ form_widget(form.twitter, {'attr': {'class': 'pure-input-1','placeholder' : 'Twitter url' }}) }}
+                        {{ form_errors(form.twitter) }}
+
+                        <span class="icon"><i class="fa fa-youtube-play"></i></span>
+                        {{ form_widget(form.youtube, {'attr': {'class': 'pure-input-1','placeholder' : 'Youtube url' }}) }}
+                        {{ form_errors(form.youtube) }}
+
+                    </fieldset>
+
+                    <fieldset class="showstats">
+                        <label for="showstats" class="pure-checkbox">
+                            {{ form_widget(form.showstats, {'attr': {'class': 'checkbox'}}) }}
+                            Show stats on profile or not?
+                        </label>
+                    </fieldset>
+
+                    <fieldset class="upload">
+                        <span>Profile picture</span>
+                        <input name="image" type="file" class="pure-input-1" placeholder="Upload profile picture">
+                    </fieldset>
+
+                    <p>
+                        {{ form_widget(form.send,{'attr' : {'class' : 'pure-button pure-input-1-3 pure-button-primary' , 'label' : 'Edit settings' }}) }}
+                    </p>
+
+                    {{ form_widget(form._token) }}
+                </form>
             </div>
         </div>
     </main>
